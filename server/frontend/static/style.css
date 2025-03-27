@@ -1,17 +1,26 @@
-img{
-  width: 60%;
+img {
+  width: 100%; /* 画像の幅をカードの幅に合わせる */
+  height: 150px; /* 高さを固定 */
+  object-fit: cover; /* 画像が歪まないようにする */
   align-self: center;
 }
 
-.card{
+
+.card {
   border: rgb(103, 102, 105) 3px solid;
-  display: flex;  
+  display: flex;
   flex-direction: column;
-  margin-left:5%;
-  margin-right:5%;
+  margin-left: 5%;
+  margin-right: 5%;
   margin-top: 1%;
   margin-bottom: 1%;
+  width: 30%; /* 幅を一定に */
+  overflow: hidden; /* 中身がはみ出さないように */
 }
+
+
+
+
 
 .row{
   display: flex;  
@@ -124,3 +133,4 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
