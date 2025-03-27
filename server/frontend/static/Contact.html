@@ -1,0 +1,67 @@
+<html>
+<head>
+  <!-- スタイルシートをリンクしています -->
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
+</head>
+<body>
+  <!-- ナビゲーションバーの開始 -->
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
+    <div class="container-fluid">
+      <!-- ナビゲーションバーに表示されるタイトル -->
+      <h2 style="padding-right: 5%;">Dealerships</h2>
+      <!-- ナビゲーションバーの切り替えボタン -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- ナビゲーションのリンク -->
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- ホームリンク -->
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" aria-current="page" href="/">Home</a>
+          </li>
+          <!-- アバウトリンク（現在選択中） -->
+          <li class="nav-item">
+            <a class="nav-link" style="font-size: larger;" href="/about">About Us</a>
+          </li>
+          <!-- お問い合わせリンク -->
+          <li class="nav-item">
+            <a class="nav-link active" style="font-size: larger;" href="/contact">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+ <!-- お問い合わせセクション -->
+  <div class="container">
+    <h1>お問い合わせ</h1>
+    <!-- チーム別連絡先リスト -->
+    <div class="team-card">
+      <h3>営業チーム</h3>
+      <p>営業に関するお問い合わせは、以下のメールアドレスまでご連絡ください。</p>
+      <p><a href="mailto:sales@bestcars.com" class="btn-contact">sales@bestcars.com</a></p>
+    </div>
+
+    <div class="team-card">
+      <h3>カスタマーサポートチーム</h3>
+      <p>製品のサポートやクレームについては、こちらのメールアドレスまでご連絡ください。</p>
+      <p><a href="mailto:support@bestcars.com" class="btn-contact">support@bestcars.com</a></p>
+    </div>
+
+    <div class="team-card">
+      <h3>技術サポートチーム</h3>
+      <p>技術的な質問や問題については、以下のメールアドレスにご連絡ください。</p>
+      <p><a href="mailto:tech@bestcars.com" class="btn-contact">tech@bestcars.com</a></p>
+    </div>
+
+    <div class="team-card">
+      <h3>人事チーム</h3>
+      <p>採用に関する問い合わせは、こちらのメールアドレスまでご連絡ください。</p>
+      <p><a href="mailto:hr@bestcars.com" class="btn-contact">hr@bestcars.com</a></p>
+    </div>
+  </div>
+
+</body>
+</html>

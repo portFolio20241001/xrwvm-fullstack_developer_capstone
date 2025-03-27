@@ -14,130 +14,140 @@ import os
 from pathlib import Path
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# プロジェクト内でのパスの基本ディレクトリを設定
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+# 開発用設定 - 本番環境には不適切
+# 本番環境にデプロイする際はチェックリストを確認
+# https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# セキュリティ警告: 本番環境で使用する秘密鍵は秘密にしておく
 SECRET_KEY =\
     'django-insecure-ccow$tz_=9%dxu4(0%^(z%nx32#s@(zt9$ih@)5l54yny)wm-0'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# セキュリティ警告: 本番環境ではDEBUGをONにしない
 DEBUG = True
 
-ALLOWED_HOSTS=['localhost','https://kenkouishi11-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/']
-CSRF_TRUSTED_ORIGINS=['https://kenkouishi11-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/']
+# 許可するホスト名を設定
+ALLOWED_HOSTS = ['localhost', 'https://kenkouishi11-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/']
 
+# CSRF保護を許可するオリジンを設定
+CSRF_TRUSTED_ORIGINS = ['https://kenkouishi11-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/']
+
+# RESTフレームワークの認証設定
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [],  # デフォルトの認証クラスは空
 }
 
-# Application definition
+# アプリケーション定義
 
 INSTALLED_APPS = [
-    'djangoapp.apps.DjangoappConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_extensions',  # ER図作成に必要
+    'djangoapp.apps.DjangoappConfig',  # 自作のアプリ
+    'django.contrib.admin',           # 管理サイト
+    'django.contrib.auth',             # ユーザー認証
+    'django.contrib.contenttypes',     # コンテンツタイプ
+    'django.contrib.sessions',         # セッション
+    'django.contrib.messages',         # メッセージ
+    'django.contrib.staticfiles',      # 静的ファイル
+    'django_extensions',               # ER図作成に必要
 ]
 
+# ミドルウェア設定
+
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',  # セキュリティミドルウェア
+    'django.contrib.sessions.middleware.SessionMiddleware',  # セッションミドルウェア
+    'django.middleware.common.CommonMiddleware',  # 共通ミドルウェア
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # 認証ミドルウェア
+    'django.contrib.messages.middleware.MessageMiddleware',  # メッセージミドルウェア
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # X-Frame-Optionsミドルウェア
 ]
+
+# ルートURLの設定
 
 ROOT_URLCONF = 'djangoproj.urls'
 
+# テンプレート設定
+
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Djangoテンプレートエンジン使用
         'DIRS': [
-            os.path.join(BASE_DIR,'frontend/static')
+            os.path.join(BASE_DIR, 'frontend/static')  # 静的ファイルのディレクトリ
         ],
-        'APP_DIRS': True,
+        'APP_DIRS': True,  # アプリ内のテンプレートも読み込む
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.debug',  # デバッグ情報をテンプレートに渡す
+                'django.template.context_processors.request',  # リクエスト情報をテンプレートに渡す
+                'django.contrib.auth.context_processors.auth',  # 認証情報をテンプレートに渡す
+                'django.contrib.messages.context_processors.messages',  # メッセージ情報をテンプレートに渡す
             ],
         },
     },
 ]
 
+# WSGIアプリケーション設定
+
 WSGI_APPLICATION = 'djangoproj.wsgi.application'
 
 
-# Database
+# データベース設定
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # 使用するデータベースエンジン
+        'NAME': BASE_DIR / 'db.sqlite3',  # データベースファイルの場所
     }
 }
 
+# パスワードバリデータの設定
+
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # ユーザー属性の類似性チェック
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # 最低文字数チェック
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # 一般的なパスワードチェック
     },
     {
-        'NAME':
-        'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # 数字のみのパスワードチェック
     },
 ]
 
 
-# Internationalization
+# 国際化設定
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-us'  # 言語コードを英語に設定
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC'  # タイムゾーンをUTCに設定
 
-USE_I18N = True
+USE_I18N = True  # 国際化を有効にする
 
-USE_L10N = True
+USE_L10N = True  # ロケールに従ったフォーマットを使用する
 
-USE_TZ = True
+USE_TZ = True  # タイムゾーンを有効にする
 
 
-# Static files (CSS, JavaScript, Images)
+# 静的ファイル（CSS, JavaScript, 画像）の設定
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
-MEDIA_URL = '/media/'
+STATIC_URL = '/static/'  # 静的ファイルのURL
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # 静的ファイルの保存場所
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')  # メディアファイルの保存場所
+MEDIA_URL = '/media/'  # メディアファイルのURL
 
-# Default primary key field type
+# デフォルトの主キーのフィールドタイプ
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # 主キーをBigAutoFieldに設定
 
 STATICFILES_DIRS = [
-        os.path.join(BASE_DIR,'frontend/static')
+    os.path.join(BASE_DIR, 'frontend/static')  # 静的ファイルの追加ディレクトリ
 ]
-
