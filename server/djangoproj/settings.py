@@ -80,7 +80,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Djangoテンプレートエンジン使用
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/static')  # 静的ファイルのディレクトリ
+            os.path.join(BASE_DIR, 'frontend/static'),
+            os.path.join(BASE_DIR, 'frontend/build'),
+            os.path.join(BASE_DIR, 'frontend/build/static'),
         ],
         'APP_DIRS': True,  # アプリ内のテンプレートも読み込む
         'OPTIONS': {

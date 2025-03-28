@@ -40,4 +40,7 @@ urlpatterns = [
 
     # お問い合わせページのテンプレートビュー設定
     path('contact/', TemplateView.as_view(template_name="Contact.html")),  # お問い合わせページ用のテンプレートビュー
+
+    # ログインページのテンプレートビュー設定
+    path('login/', TemplateView.as_view(template_name="index.html")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # 静的ファイルのルーティング設定
