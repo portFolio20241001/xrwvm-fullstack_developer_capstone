@@ -17,8 +17,8 @@ app_name = 'djangoapp'
 
 # URLパターンを定義するリスト
 urlpatterns = [
-    # ユーザー登録用のURLパス（現在コメントアウト中）
-    # path('registration', views.registration, name='registration'),
+    # ユーザー登録用のURLパス
+    path('registration', views.registration, name='registration'),
 
     # ログイン用のURLパス
     path(route='login', view=views.login_user, name='login'),
