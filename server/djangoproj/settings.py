@@ -30,10 +30,16 @@ SECRET_KEY =\
 DEBUG = True
 
 # 許可するホスト名を設定
-ALLOWED_HOSTS = ['localhost', 'https://kenkouishi11-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/']
+ALLOWED_HOSTS = [
+    'localhost',
+    'kenkouishi11-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai'
+]
 
 # CSRF保護を許可するオリジンを設定
-CSRF_TRUSTED_ORIGINS = ['https://kenkouishi11-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/']
+CSRF_TRUSTED_ORIGINS = [
+    'https://kenkouishi11-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai'
+]
+
 
 # RESTフレームワークの認証設定
 REST_FRAMEWORK = {
