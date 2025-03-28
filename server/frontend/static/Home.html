@@ -9,32 +9,44 @@
   <!-- Bootstrapのスタイルシート（ローカルファイル）を読み込み -->
   <link rel="stylesheet" href="static/bootstrap.min.css">
 <script>
-  // ログアウト処理の非同期関数
-  const logout = async (e) => {
-    e.preventDefault(); // 既定のリンクの動作をキャンセル
+const logout = async (e) => {
+  e.preventDefault(); // 既定のリンクの動作をキャンセル
 
-    // ログアウト用のURLを指定
-    let logout_url = window.location.origin + "/djangoapp/logout";
-    
-    // ログアウト処理を行うために、GETリクエストを送信
-    const res = await fetch(logout_url, {
-      method: "GET",
-    });
+  let logout_url = window.location.origin + "/djangoapp/logout"; // ログアウトURLを設定
 
-    // レスポンスをJSON形式で取得
-    const json = await res.json();
+  console.log("logout_url:", logout_url); // ログアウトURLをコンソールに出力
 
-    // レスポンスが正しい場合（ログアウト成功）
-    if (json) {
-      let username = sessionStorage.getItem('username'); // 現在のユーザー名を取得
-      sessionStorage.removeItem('username'); // セッションからユーザー名を削除
-      window.location.href = window.location.origin;  // ログアウト後、ホームにリダイレクト
-      window.location.reload();  // ページをリロードして状態を更新
-      alert("Logging out " + username + "..."); // ログアウトの通知を表示
+  try {
+    const res = await fetch(logout_url, { method: "GET" }); // ログアウトリクエストを送信
+
+    console.log("res:", res); // レスポンスをコンソールに出力
+
+    // レスポンスがJSON形式かどうかを確認
+    const contentType = res.headers.get("Content-Type"); // コンテンツタイプを取得
+    if (contentType && contentType.includes("application/json")) { // JSON形式の場合
+      const json = await res.json(); // レスポンスをJSONとして解析
+
+      // ログアウトが成功した場合
+      if (json.success) {
+        let username = sessionStorage.getItem('username'); // セッションストレージからユーザー名を取得
+        sessionStorage.removeItem('username'); // ユーザー名をセッションストレージから削除
+        alert("Logging out " + username + "..."); // ログアウトのメッセージを表示
+        window.location.href = window.location.origin;  // ログアウト後、ホームページにリダイレクト
+      } else {
+        alert("The user could not be logged out."); // ログアウトに失敗した場合のメッセージ
+      }
     } else {
-      alert("The user could not be logged out."); // ログアウト失敗の通知
+      // レスポンスがJSONでない場合の処理（エラーページなど）
+      const errorText = await res.text(); // レスポンスをテキストとして取得
+      console.error("ログアウトエラー: ", errorText); // HTMLエラーをデバッグ用に表示
+      alert("ログアウト中にエラーが発生しました。再度お試しください。"); // エラーメッセージを表示
     }
-  };
+  } catch (error) {
+    alert("ログアウト中にエラーが発生しました: " + error.message); // ネットワークエラーなどのキャッチ
+  }
+};
+
+
 
   // セッションの確認関数
   let checkSession = () => {

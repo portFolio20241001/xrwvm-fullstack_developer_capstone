@@ -73,11 +73,15 @@ def login_user(request):
 
 # 以下、他の機能の雛形（まだ実装されていない）
 
-# ログアウト要求を処理する `logout_request` 関数
-def logout_request(request):
-    logout(request)
-    data = {"userName":""}
-    return JsonResponse(data)
+# ログアウト要求を処理する `logout_user` 関数
+def logout_user(request):
+    try:
+        logout(request)  # ログアウト処理
+        data = {"success": True}  # ログアウト成功を示す
+        return JsonResponse(data)
+    except Exception as e:
+        # エラーが発生した場合、詳細なエラー情報を返す
+        return JsonResponse({"error": str(e)}, status=500)
 
 # ユーザー登録を処理する `registration` 関数
 # @csrf_exempt
