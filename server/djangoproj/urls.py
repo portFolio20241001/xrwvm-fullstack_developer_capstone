@@ -43,4 +43,8 @@ urlpatterns = [
 
     # ログインページのテンプレートビュー設定
     path('login/', TemplateView.as_view(template_name="index.html")),
+
+    # 登録ページのテンプレートビュー設定
+    path('register/', TemplateView.as_view(template_name="index.html")),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # 静的ファイルのルーティング設定
