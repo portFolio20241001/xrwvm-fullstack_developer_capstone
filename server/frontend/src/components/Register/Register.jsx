@@ -22,6 +22,8 @@ const Register = () => {
   const register = async (e) => {
     e.preventDefault(); // フォームのデフォルト送信をキャンセル
 
+    console.log("register処理")
+
     let register_url = window.location.origin + "/djangoapp/register"; // 登録用URLを設定
     
     // fetchを使用してサーバーにデータを送信
