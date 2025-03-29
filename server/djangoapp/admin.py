@@ -1,13 +1,23 @@
-# from django.contrib import admin
-# from .models import related models
+# Djangoの管理サイトのために必要なモジュールをインポート
+from django.contrib import admin
+# 作成したCarMakeモデルとCarModelモデルをインポート
+from .models import CarMake, CarModel
 
 
-# Register your models here.
+# モデルを管理サイトに登録するための準備
 
-# CarModelInline class
+# CarModelInlineクラス
+# CarMakeモデルに関連するCarModelの情報をインラインで表示するために使用
 
-# CarModelAdmin class
+# CarModelAdminクラス
+# CarModelモデルを管理サイトでどのように表示するかを定義するクラス
 
-# CarMakeAdmin class with CarModelInline
+# CarMakeAdminクラス
+# CarMakeモデルの管理サイト用設定を行い、CarModelInlineを使ってCarModelも表示するクラス
 
-# Register models here
+# モデルを管理サイトに登録
+# CarMakeモデルを管理サイトに登録
+admin.site.register(CarMake)
+
+# CarModelモデルを管理サイトに登録
+admin.site.register(CarModel)
