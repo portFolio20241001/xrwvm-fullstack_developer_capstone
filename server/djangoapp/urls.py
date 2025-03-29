@@ -26,6 +26,9 @@ urlpatterns = [
     # ログアウト用のURLパス
     path(route='logout', view=views.logout_user, name='logout'),
 
+    # Car情報取得用のURLパス
+    path(route='get_cars', view=views.get_cars, name ='getcars'),
+
     # ディーラーのレビュー表示用のURLパス（現在コメントアウト中）
     # path('dealer_reviews', views.get_dealer_reviews, name='dealer_reviews'),
 

@@ -9,6 +9,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 # Djangoのユーザーモデルをインポート
 from django.contrib.auth.models import User
 
+# CarMakeとCarModelをインポート
+from .models import CarMake, CarModel
+
 # get_object_or_404、render、redirect関数をインポート
 from django.shortcuts import get_object_or_404, render, redirect
 
@@ -42,7 +45,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 # ロガーのインスタンスを取得
 logger = logging.getLogger(__name__)
-
 
 # ここからビュー関数を定義
 
@@ -119,6 +121,18 @@ def registration(request):
         data = {"userName": username, "error": "Already Registered"}  # 既存ユーザーエラーメッセージ
         return JsonResponse(data)  # エラーレスポンスを返す
 
+
+def get_cars(request):
+    count = CarMake.objects.filter().count()  # CarMakeの数をカウント
+    print(count)  # カウント結果をコンソールに出力
+    if(count == 0):
+        initiate()  # CarMakeが空の場合、初期データを投入
+    car_models = CarModel.objects.select_related('car_make')  # CarModelと関連するCarMakeを取得
+    cars = []  # 車情報を格納するリスト
+    for car_model in car_models:  # 各CarModelに対してループ
+        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})  # 車種とメーカー名をリストに追加
+    return JsonResponse({"CarModels":cars})  # 車種とメーカー名のリストをJSON形式で返す
+    
 
 # ディーラー一覧ページの表示を行う `get_dealerships` 関数
 # def get_dealerships(request):
