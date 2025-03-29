@@ -1,23 +1,23 @@
 version: '3.9'
 
 services:
-  # Mongodb service
+  # Mongodb サービス（データベース）
   mongo_db:
-    container_name: db_container
-    image: mongo:latest
+    container_name: db_container  # コンテナ名を指定
+    image: mongo:latest  # 使用する MongoDB のイメージを指定
     ports:
-      - 27017:27017
-    restart: always
+      - 27017:27017  # コンテナのポート27017をホストにマッピング
+    restart: always  # コンテナが停止した場合、自動的に再起動する
     volumes:
-      - mongo_data:/data/db
+      - mongo_data:/data/db  # データベースのデータを保持するためのボリューム設定
 
-  # Node api service
+  # Node API サービス
   api:
-    image: nodeapp
+    image: nodeapp  # 使用する Node.js アプリケーションのイメージを指定
     ports:
-      - 3030:3030
-    depends_on: 
-      - mongo_db
+      - 3030:3030  # コンテナのポート3030をホストにマッピング
+    depends_on:  # このサービスは MongoDB が起動してから開始する
+      - mongo_db  # MongoDB サービスが依存先
 
 volumes:
-  mongo_data: {}
+  mongo_data: {}  # MongoDB のデータを格納するためのボリュームを作成
