@@ -13,8 +13,8 @@ app.use(cors());
 app.use(require('body-parser').urlencoded({ extended: false }));
 
 // reviews.jsonとdealerships.jsonの内容を読み込む
-const reviews_data = JSON.parse(fs.readFileSync("reviews.json", 'utf8'));  // レビューのデータを読み込み
-const dealerships_data = JSON.parse(fs.readFileSync("dealerships.json", 'utf8'));  // ディーラーのデータを読み込み
+const reviews_data = JSON.parse(fs.readFileSync("./data/reviews.json", 'utf8'));  // レビューのデータを読み込み
+const dealerships_data = JSON.parse(fs.readFileSync("./data/dealerships.json", 'utf8'));  // ディーラーのデータを読み込み
 
 // MongoDBに接続（MongoDBのホスト名は'mongo_db'、データベース名は'dealershipsDB'）
 mongoose.connect("mongodb://mongo_db:27017/", {'dbName':'dealershipsDB'});
@@ -58,7 +58,7 @@ app.get('/fetchReviews', async (req, res) => {
 app.get('/fetchReviews/dealer/:id', async (req, res) => {
   try {
     // 指定されたディーラーIDに関連するレビューを取得
-    const documents = await Reviews.find({ dealership: req.params.id });
+    const documents = await Reviews.findOne({ dealership: req.params.id });
     res.json(documents);  // 取得したレビューをJSON形式で返す
   } catch (error) {
     res.status(500).json({ error: 'Error fetching documents' });  // エラーハンドリング：500エラー
@@ -79,7 +79,7 @@ app.get('/fetchDealers', async (req, res) => {
 app.get('/fetchDealers/:state', async (req, res) => {
   try {
     // 指定された州に関連するディーラーを取得
-    const documents = await Dealerships.find({ state: req.params.state });
+    const documents = await Dealerships.findOne({ state: req.params.state });
     res.json(documents);  // 取得したディーラーをJSON形式で返す
   } catch (error) {
     res.status(500).json({ error: 'Error fetching dealerships by state' });  // エラーハンドリング：500エラー
@@ -90,7 +90,7 @@ app.get('/fetchDealers/:state', async (req, res) => {
 app.get('/fetchDealer/:id', async (req, res) => {
   try {
     // 指定されたIDでディーラー情報を取得
-    const dealership = await Dealerships.findById(req.params.id);
+    const dealership = await Dealerships.findOne({ id: req.params.id });
     if (dealership) {
       res.json(dealership);  // 取得したディーラー情報をJSON形式で返す
     } else {
