@@ -40,7 +40,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 
 # populateモジュールをインポート（コメントアウト中、初期データ投入用？）
-# from .populate import initiate
+from .populate import initiate
 
 
 # ロガーのインスタンスを取得
