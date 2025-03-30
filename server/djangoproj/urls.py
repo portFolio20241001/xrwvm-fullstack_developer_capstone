@@ -47,7 +47,10 @@ urlpatterns = [
     # 登録ページのテンプレートビュー設定
     path('register/', TemplateView.as_view(template_name="index.html")),  # 登録ページ用のテンプレートビュー
 
-    # ディーラーページのテンプレートビュー設定
-    path('dealers/', TemplateView.as_view(template_name="index.html")),  # ディーラーページ用のテンプレートビュー
+    # dealersページのテンプレートビュー設定
+    path('dealers/', TemplateView.as_view(template_name="index.html")),  # dealersページ用のテンプレートビュー
+
+    # dealerページのテンプレートビュー設定
+    path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),  # dealerページ用のテンプレートビュー
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # 静的ファイルのルーティング設定

@@ -4,6 +4,8 @@ import LoginPanel from "./components/Login/Login";
 import RegisterPanel from "./components/Register/Register"; 
 // Dealersコンポーネントをインポート
 import Dealers from './components/Dealers/Dealers';
+// Dealerコンポーネントをインポート
+import Dealer from "./components/Dealers/Dealer"
 // React RouterのRoutesとRouteをインポート
 import { Routes, Route } from "react-router-dom";
 
@@ -18,6 +20,9 @@ function App() {
 
       {/* /dealers のパスにアクセスした場合に Dealers コンポーネントを表示 */}
       <Route path="/dealers" element={<Dealers />} />
+
+      {/* /dealer のパスにアクセスした場合に Dealer コンポーネントを表示 */}
+      <Route path="/dealer/:id" element={<Dealer/>} />
     </Routes>
   );
 }
