@@ -148,6 +148,9 @@ def get_dealerships(request, state="All"):  #Stateのデフォルト値は "All"
     else:
         endpoint = "/fetchDealers/"+state
     dealerships = get_request(endpoint)  # 指定されたエンドポイントからディーラー情報を取得
+
+    print("dealerships:",dealerships,dealerships)
+
     return JsonResponse({"status":200,"dealers":dealerships})  # ディーラー情報をJSON形式で返す
 
 # ディーラーのレビュー一覧を表示する `get_dealer_reviews` 関数
