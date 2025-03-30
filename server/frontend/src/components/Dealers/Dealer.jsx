@@ -54,33 +54,46 @@ const Dealer = () => {
     if (retobj.status === 200) {
 
       console.log("確認ポイント2")
+      console.log("retobj:",retobj)
 
       let dealerobjs = Array.from(retobj.dealer); // 配列に変換
+
+      console.log("dealerobjs:",dealerobjs)
+
       setDealer(dealerobjs[0]); // 最初のディーラー情報をセット
     }
   };
 
   // レビュー情報を取得する非同期関数
   const get_reviews = async () => {
-
-    console.log("確認ポイント3")
-    console.log("【Dealer.jsx】reviews_url:",reviews_url)
-
-    const res = await fetch(reviews_url, { method: "GET" });
-    const retobj = await res.json();
-
-    // ステータスコードが200（成功）の場合
-    if (retobj.status === 200) {
-
-      console.log("確認ポイント4")
-
-      if (retobj.reviews.length > 0) {
-        setReviews(retobj.reviews); // レビューリストをセット
-      } else {
-        setUnreviewed(true); // レビューがない場合フラグを更新
+    try {
+      const res = await fetch(reviews_url, { method: "GET" });
+  
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
       }
+  
+      const retobj = await res.json();
+
+      console.log("retobj.reviews:", retobj.reviews);  // ここで reviews の型と内容を確認
+      console.log("typeof retobj.reviews:", typeof retobj.reviews);
+      console.log("Array.isArray(retobj.reviews):", Array.isArray(retobj.reviews));
+
+      console.log("retobj:", retobj);
+      
+      // reviews が配列でない場合でも扱えるように修正
+      const reviewsData = Array.isArray(retobj.reviews) ? retobj.reviews : [];
+  
+      if (reviewsData.length > 0) {
+        setReviews(reviewsData); // レビューがあれば状態を更新
+      } else {
+        setUnreviewed(true); // レビューがない場合の処理
+      }
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
     }
   };
+  
 
   // 感情分析アイコンを取得する関数
   const senti_icon = (sentiment) => {
@@ -110,7 +123,12 @@ const Dealer = () => {
         </a>
       );
     }
-  }, [get_dealer, get_reviews, post_review]); // 依存関係に関数を指定
+
+    console.log("reviews:", reviews);
+    console.log("reviews type:", typeof reviews);
+    console.log("Array.isArray(reviews):", Array.isArray(reviews));
+
+  }, []); // 依存関係に関数を指定
 
   // JSXのレンダリング
   return (
