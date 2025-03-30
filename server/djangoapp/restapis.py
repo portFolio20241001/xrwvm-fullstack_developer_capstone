@@ -28,13 +28,14 @@ def get_request(endpoint, **kwargs):
         dict: APIレスポンスのJSONデータ（エラー時はNone）
     """
     params = ""  # クエリパラメータの初期化
-    if(kwargs):
-        for key, value in kwargs.items():
-            params += f"{key}={value}&"
+    if(kwargs):  # kwargsが存在する場合
+        for key, value in kwargs.items():  # 各クエリパラメータを処理
+            params += f"{key}={value}&"  # パラメータをURLエンコードして追加
 
+    # 完成したリクエストURL
     request_url = f"{backend_url}{endpoint}?{params}"
 
-    print("GETリクエストを送信: {}".format(request_url))
+    print("GETリクエストを送信: {}".format(request_url))  # リクエストURLの出力
     try:
         # requestsライブラリを使ってGETリクエストを送信
         response = requests.get(request_url)
@@ -44,13 +45,27 @@ def get_request(endpoint, **kwargs):
         print(f"ネットワークエラー: {e}")
         return None
 
-# 感情分析を実行する関数（未実装）
-# def analyze_review_sentiments(text):
-#     """
-#     感情分析APIにテキストを送信し、感情スコアを取得する関数（未実装）。
-#     """
-#     request_url = f"{sentiment_analyzer_url}analyze/{text}"
-#     # ここにコードを追加
+# 感情分析を実行する関数
+def analyze_review_sentiments(text):
+    """
+    与えられたテキストに基づいて感情分析を実行し、結果を返す。
+
+    引数:
+        text (str): 感情分析を行いたいテキスト
+
+    戻り値:
+        dict: 感情分析結果のJSONデータ
+    """
+    request_url = sentiment_analyzer_url+"analyze/"+text  # 感情分析APIのURLを作成
+    try:
+        # requestsライブラリを使ってGETリクエストを送信
+        response = requests.get(request_url)
+        return response.json()  # JSONレスポンスを返す
+    except Exception as err:
+        # エラー発生時の処理
+        print(f"予期しないエラー: {err=}, {type(err)=}")
+        print("ネットワークエラーが発生しました")
+        return None
 
 # レビューを投稿する関数（未実装）
 # def post_review(data_dict):
