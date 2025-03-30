@@ -167,12 +167,16 @@ def get_dealer_reviews(request, dealer_id):
 
         # get_request関数を使用して、指定されたエンドポイントからレビュー情報を取得
         reviews = get_request(endpoint)
+
+        print("reviews:",reviews)
+        print("reviewsの型:", type(reviews))
+        print("reviewsの内容:", reviews)
         
         # 取得したレビューごとに処理を行う
         for review_detail in reviews:
 
             print("通過確認3")
-            print("review_detail:",review_detail)
+            print("review_detail['review']:",review_detail['review'])
 
             # レビューの感情分析を行う（レビューのテキストを渡す）
             response = analyze_review_sentiments(review_detail['review'])
@@ -184,6 +188,8 @@ def get_dealer_reviews(request, dealer_id):
             
             # レビューに感情分析結果（sentiment）を追加
             review_detail['sentiment'] = response['sentiment']
+
+            print("通過確認4")
         
         # レビュー情報をJSON形式で返す
         return JsonResponse({"status":200,"reviews":reviews})

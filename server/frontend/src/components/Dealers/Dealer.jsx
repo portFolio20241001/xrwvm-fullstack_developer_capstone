@@ -43,13 +43,18 @@ const Dealer = () => {
   // ディーラー情報を取得する非同期関数
   const get_dealer = async () => {
 
-    console.log("dealer_url:",dealer_url)
+    console.log("確認ポイント1")
+
+    console.log("【Dealer.jsx】dealer_url:",dealer_url)
 
     const res = await fetch(dealer_url, { method: "GET" });
     const retobj = await res.json();
 
     // ステータスコードが200（成功）の場合
     if (retobj.status === 200) {
+
+      console.log("確認ポイント2")
+
       let dealerobjs = Array.from(retobj.dealer); // 配列に変換
       setDealer(dealerobjs[0]); // 最初のディーラー情報をセット
     }
@@ -58,13 +63,17 @@ const Dealer = () => {
   // レビュー情報を取得する非同期関数
   const get_reviews = async () => {
 
-    console.log("reviews_url:",reviews_url)
+    console.log("確認ポイント3")
+    console.log("【Dealer.jsx】reviews_url:",reviews_url)
 
     const res = await fetch(reviews_url, { method: "GET" });
     const retobj = await res.json();
 
     // ステータスコードが200（成功）の場合
     if (retobj.status === 200) {
+
+      console.log("確認ポイント4")
+
       if (retobj.reviews.length > 0) {
         setReviews(retobj.reviews); // レビューリストをセット
       } else {
