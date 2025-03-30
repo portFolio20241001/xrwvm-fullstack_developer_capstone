@@ -155,16 +155,24 @@ def get_dealerships(request, state="All"):  #Stateのデフォルト値は "All"
 
 # ディーラーのレビュー一覧を表示する `get_dealer_reviews` 関数
 def get_dealer_reviews(request, dealer_id):
+
+    print("通過確認1")
+
     # ディーラーIDが提供されている場合
     if(dealer_id):
         # ディーラーIDに基づいてレビュー情報を取得するエンドポイントを設定
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
         
+        print("通過確認2")
+
         # get_request関数を使用して、指定されたエンドポイントからレビュー情報を取得
         reviews = get_request(endpoint)
         
         # 取得したレビューごとに処理を行う
         for review_detail in reviews:
+
+
+
             # レビューの感情分析を行う（レビューのテキストを渡す）
             response = analyze_review_sentiments(review_detail['review'])
             

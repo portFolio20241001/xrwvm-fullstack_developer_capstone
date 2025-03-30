@@ -55,10 +55,10 @@ app.get('/fetchReviews', async (req, res) => {
 });
 
 // Expressルート：特定のディーラーに関連するレビューを取得するAPI
-app.get('/fetchReviews/dealer/:dealership', async (req, res) => {
+app.get('/fetchReviews/dealer/:id', async (req, res) => {
   try {
     // 指定されたディーラーIDに関連するレビューを取得
-    const documents = await Reviews.findOne({ dealership: req.params.dealership });
+    const documents = await Reviews.findOne({ id: req.params.id });
     res.json(documents);  // 取得したレビューをJSON形式で返す
   } catch (error) {
     res.status(500).json({ error: 'Error fetching documents' });  // エラーハンドリング：500エラー
