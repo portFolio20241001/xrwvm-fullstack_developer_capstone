@@ -135,16 +135,59 @@ def get_cars(request):
     
 
 # ディーラー一覧ページの表示を行う `get_dealerships` 関数
-# def get_dealerships(request):
-#     ...
+def get_dealerships(request, state="All"):  #Stateのデフォルト値は "All"
+    if(state == "All"):
+        endpoint = "/fetchDealers"
+    else:
+        endpoint = "/fetchDealers/"+state
+    dealerships = get_request(endpoint)  # 指定されたエンドポイントからディーラー情報を取得
+    return JsonResponse({"status":200,"dealers":dealerships})  # ディーラー情報をJSON形式で返す
 
 # ディーラーのレビュー一覧を表示する `get_dealer_reviews` 関数
-# def get_dealer_reviews(request, dealer_id):
-#     ...
+def get_dealer_reviews(request, dealer_id):
+    # ディーラーIDが提供されている場合
+    if(dealer_id):
+        # ディーラーIDに基づいてレビュー情報を取得するエンドポイントを設定
+        endpoint = "/fetchReviews/dealer/"+str(dealer_id)
+        
+        # get_request関数を使用して、指定されたエンドポイントからレビュー情報を取得
+        reviews = get_request(endpoint)
+        
+        # 取得したレビューごとに処理を行う
+        for review_detail in reviews:
+            # レビューの感情分析を行う（レビューのテキストを渡す）
+            response = analyze_review_sentiments(review_detail['review'])
+            
+            # 感情分析の結果を表示
+            print(response)
+            
+            # レビューに感情分析結果（sentiment）を追加
+            review_detail['sentiment'] = response['sentiment']
+        
+        # レビュー情報をJSON形式で返す
+        return JsonResponse({"status":200,"reviews":reviews})
+    
+    # ディーラーIDが提供されていない場合、Bad Requestエラーレスポンスを返す
+    else:
+        return JsonResponse({"status":400,"message":"Bad Request"})
+
+
 
 # ディーラーの詳細情報を表示する `get_dealer_details` 関数
-# def get_dealer_details(request, dealer_id):
-#     ...
+# `get_dealer_details` 関数の定義（特定のディーラーの詳細情報を取得するためのビュー）
+def get_dealer_details(request, dealer_id):
+    # `dealer_id` が提供されている場合
+    if(dealer_id):
+        # ディーラーの詳細情報を取得するためのエンドポイントを設定
+        endpoint = "/fetchDealer/"+str(dealer_id)
+        # `get_request` を呼び出して指定されたエンドポイントからデータを取得
+        dealership = get_request(endpoint)
+        # 成功した場合、ディーラー情報を JSON 形式で返す（ステータスコード 200）
+        return JsonResponse({"status":200,"dealer":dealership})
+    else:
+        # `dealer_id` が提供されていない場合、400（Bad Request）エラーメッセージを返す
+        return JsonResponse({"status":400,"message":"Bad Request"})
+
 
 # レビュー投稿を処理する `add_review` 関数
 # def add_review(request):
