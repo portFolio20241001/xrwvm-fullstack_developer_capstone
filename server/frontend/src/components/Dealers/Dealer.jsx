@@ -56,11 +56,11 @@ const Dealer = () => {
       console.log("確認ポイント2")
       console.log("retobj:",retobj)
 
-      let dealerobjs = Array.from(retobj.dealer); // 配列に変換
+      let dealerobj = retobj.dealer;
 
-      console.log("dealerobjs:",dealerobjs)
+      console.log("dealerobj:",dealerobj)
 
-      setDealer(dealerobjs[0]); // 最初のディーラー情報をセット
+      setDealer(dealerobj); // 最初のディーラー情報をセット
     }
   };
 
