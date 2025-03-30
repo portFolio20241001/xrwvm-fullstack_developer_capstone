@@ -44,6 +44,6 @@ urlpatterns = [
     # ディーラーのレビュー表示用のURLパス（現在コメントアウト中）
     # path('dealer_reviews', views.get_dealer_reviews, name='dealer_reviews'),
 
-    # レビュー追加用のURLパス（現在コメントアウト中）
-    # path('add_review', views.add_review, name='add_review'),
+    # レビュー追加用のURLパス
+    path(route='add_review', view=views.add_review, name='add_review'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # メディアファイルの静的ファイルを処理するための設定

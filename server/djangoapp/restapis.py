@@ -67,9 +67,22 @@ def analyze_review_sentiments(text):
         print("ネットワークエラーが発生しました")
         return None
 
-# レビューを投稿する関数（未実装）
-# def post_review(data_dict):
-#     """
-#     APIにレビューを投稿する関数（未実装）。
-#     """
-#     # ここにコードを追加
+
+# ディーラーのレビューを投稿する関数
+def post_review(data_dict):
+    # レビューを送信するためのURLを設定（バックエンドのエンドポイント）
+    request_url = backend_url + "/insert_review"
+    
+    try:
+        # POSTリクエストを送信（`data_dict`をJSON形式で送信）
+        response = requests.post(request_url, json=data_dict)
+        
+        # レスポンスとして返されたJSONデータを表示
+        print(response.json())
+        
+        # レスポンスを返す
+        return response.json()
+    
+    except:
+        # ネットワーク例外が発生した場合のエラーメッセージ
+        print("Network exception occurred")

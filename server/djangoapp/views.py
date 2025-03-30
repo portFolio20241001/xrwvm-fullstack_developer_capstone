@@ -39,8 +39,15 @@ import json
 # CSRFトークン検証を無効化するデコレーターをインポート
 from django.views.decorators.csrf import csrf_exempt
 
-# populateモジュールをインポート（コメントアウト中、初期データ投入用？）
+# populateモジュールをインポート（初期データ投入用）
 from .populate import initiate
+
+# restapis.py モジュールから関数をインポート
+#       get_request: 指定されたエンドポイントからデータを取得する関数
+#       analyze_review_sentiments: レビューの感情を分析する関数
+#       post_review: レビューをバックエンドに送信する関数
+from .restapis import get_request, analyze_review_sentiments, post_review
+
 
 
 # ロガーのインスタンスを取得
@@ -189,6 +196,25 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status":400,"message":"Bad Request"})
 
 
-# レビュー投稿を処理する `add_review` 関数
-# def add_review(request):
-#     ...
+# ユーザーがレビューを投稿するための関数
+def add_review(request):
+    # ユーザーがログインしているかどうかを確認
+    if(request.user.is_anonymous == False):
+        # リクエストボディをJSON形式で解析（レビュー情報）
+        data = json.loads(request.body)
+        
+        try:
+            # `post_review` 関数を使ってレビューを投稿
+            response = post_review(data)
+            
+            # 成功した場合、ステータス200を返す
+            return JsonResponse({"status":200})
+        
+        except:
+            # エラーが発生した場合、ステータス401とエラーメッセージを返す
+            return JsonResponse({"status":401,"message":"Error in posting review"})
+    
+    else:
+        # ユーザーがログインしていない場合、ステータス403とメッセージを返す（未認証）
+        return JsonResponse({"status":403,"message":"Unauthorized"})
+
