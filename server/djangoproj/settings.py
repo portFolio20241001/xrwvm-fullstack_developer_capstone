@@ -32,7 +32,7 @@ DEBUG = True
 # 許可するホスト名を設定
 ALLOWED_HOSTS = [
     'localhost',
-    'kenkouishi11-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/'
+    'kenkouishi11-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
 ]
 
 # CSRF保護を許可するオリジンを設定
