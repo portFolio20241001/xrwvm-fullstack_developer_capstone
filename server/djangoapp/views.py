@@ -171,10 +171,13 @@ def get_dealer_reviews(request, dealer_id):
         # 取得したレビューごとに処理を行う
         for review_detail in reviews:
 
-
+            print("通過確認3")
+            print("review_detail:",review_detail)
 
             # レビューの感情分析を行う（レビューのテキストを渡す）
             response = analyze_review_sentiments(review_detail['review'])
+
+            print("response:",response)
             
             # 感情分析の結果を表示
             print(response)
