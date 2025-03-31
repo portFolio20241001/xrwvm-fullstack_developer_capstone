@@ -33,14 +33,22 @@ urlpatterns = [
     path(route='get_dealers', view=views.get_dealerships, name='get_dealers'),
 
     # 特定の州のディーラー情報取得用のURLパス（`/get_dealers/<state>` で get_dealerships ビューを呼び出す）
-    path(route='get_dealers/<str:state>', view=views.get_dealerships, name='get_dealers_by_state'),
+    path(route='get_dealers/<str:state>', 
+         view=views.get_dealerships, 
+         name='get_dealers_by_state'),
 
     # ディーラー詳細情報を取得するURLパス（`/dealer/<dealer_id>` で get_dealer_details ビューを呼び出す）
-    path(route='dealer/<int:dealer_id>', view=views.get_dealer_details, name='dealer_details'),
+    path(route='dealer/<int:dealer_id>', 
+         view=views.get_dealer_details, 
+         name='dealer_details'),
 
     # ディーラーのレビューを取得するURLパス（`/reviews/dealer/<dealer_id>` で get_dealer_reviews ビューを呼び出す）
-    path(route='reviews/dealer/<int:dealer_id>', view=views.get_dealer_reviews, name='dealer_reviews'),
+    path(route='reviews/dealer/<int:dealer_id>', 
+         view=views.get_dealer_reviews, 
+         name='dealer_reviews'),
 
     # レビュー追加用のURLパス
-    path(route='add_review', view=views.add_review, name='add_review'),
+    path(route='add_review', 
+         view=views.add_review, 
+         name='add_review'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # メディアファイルの静的ファイルを処理するための設定
