@@ -30,16 +30,21 @@ SECRET_KEY =\
 DEBUG = True
 
 # 許可するホスト名を設定
+# 本当はkenkou~のところは分割しない。Lint通すために分割してるだけ。
 ALLOWED_HOSTS = [
     'localhost',
-    'kenkouishi11-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
+    'kenkouishi11-8000.' +
+    'theiadockernext-1-labs-prod-theiak8s-4-tor01.' +
+    'proxy.cognitiveclass.ai'
 ]
 
 # CSRF保護を許可するオリジンを設定
+# 本当はkenkou~のところは分割しない。Lint通すために分割してるだけ。
 CSRF_TRUSTED_ORIGINS = [
-    'https://kenkouishi11-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
+    'https://kenkouishi11-8000.' +
+    'theiadockernext-1-labs-prod-theiak8s-4-tor01.' +
+    'proxy.cognitiveclass.ai'
 ]
-
 
 # RESTフレームワークの認証設定
 REST_FRAMEWORK = {
@@ -62,12 +67,18 @@ INSTALLED_APPS = [
 # ミドルウェア設定
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',  # セキュリティミドルウェア
-    'django.contrib.sessions.middleware.SessionMiddleware',  # セッションミドルウェア
-    'django.middleware.common.CommonMiddleware',  # 共通ミドルウェア
-    'django.contrib.auth.middleware.AuthenticationMiddleware',  # 認証ミドルウェア
-    'django.contrib.messages.middleware.MessageMiddleware',  # メッセージミドルウェア
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',  # X-Frame-Optionsミドルウェア
+    # セキュリティミドルウェア
+    'django.middleware.security.SecurityMiddleware',
+    # セッションミドルウェア
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    # 共通ミドルウェア
+    'django.middleware.common.CommonMiddleware',
+    # 認証ミドルウェア
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    # メッセージミドルウェア
+    'django.contrib.messages.middleware.MessageMiddleware',
+    # X-Frame-Optionsミドルウェア
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 # ルートURLの設定
@@ -78,7 +89,8 @@ ROOT_URLCONF = 'djangoproj.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Djangoテンプレートエンジン使用
+        # Djangoテンプレートエンジン使用
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'frontend/static'),
             os.path.join(BASE_DIR, 'frontend/build'),
@@ -87,10 +99,14 @@ TEMPLATES = [
         'APP_DIRS': True,  # アプリ内のテンプレートも読み込む
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',  # デバッグ情報をテンプレートに渡す
-                'django.template.context_processors.request',  # リクエスト情報をテンプレートに渡す
-                'django.contrib.auth.context_processors.auth',  # 認証情報をテンプレートに渡す
-                'django.contrib.messages.context_processors.messages',  # メッセージ情報をテンプレートに渡す
+                # デバッグ情報をテンプレートに渡す
+                'django.template.context_processors.debug',
+                # リクエスト情報をテンプレートに渡す
+                'django.template.context_processors.request',
+                # 認証情報をテンプレートに渡す
+                'django.contrib.auth.context_processors.auth',
+                # メッセージ情報をテンプレートに渡す
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -115,16 +131,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # ユーザー属性の類似性チェック
+        # ユーザー属性の類似性チェック
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # 最低文字数チェック
+        # 最低文字数チェック
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # 一般的なパスワードチェック
+        # 一般的なパスワードチェック
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # 数字のみのパスワードチェック
+        # 数字のみのパスワードチェック
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
