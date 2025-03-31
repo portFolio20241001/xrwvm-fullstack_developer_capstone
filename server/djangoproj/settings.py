@@ -132,19 +132,23 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         # ユーザー属性の類似性チェック
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.' +
+                'auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         # 最低文字数チェック
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.' +
+                'auth.password_validation.MinimumLengthValidator',
     },
     {
         # 一般的なパスワードチェック
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.' +
+                'auth.password_validation.CommonPasswordValidator',
     },
     {
         # 数字のみのパスワードチェック
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.' +
+                'auth.password_validation.NumericPasswordValidator',
     },
 ]
 
