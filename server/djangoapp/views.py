@@ -19,7 +19,6 @@
 
 # --------------------　不要関数END　------------------------
 
-
 # Djangoのユーザーモデルをインポート
 from django.contrib.auth.models import User
 
@@ -53,12 +52,10 @@ from .populate import initiate
 #       post_review: レビューをバックエンドに送信する関数
 from .restapis import get_request, analyze_review_sentiments, post_review
 
-
 # ロガーのインスタンスを取得
 logger = logging.getLogger(__name__)
 
 # ここからビュー関数を定義
-
 
 # ログイン要求を処理する `login_user` 関数
 @csrf_exempt  # CSRFトークンをチェックしない（外部API呼び出し用）
@@ -101,8 +98,6 @@ def logout_user(request):
 # ユーザー登録を処理する
 @csrf_exempt  # CSRF検証を免除（セキュリティリスクがあるので注意）
 def registration(request):
-    # context = {}  # 空のコンテキストを作成（後で使う場合がある）
-
     # リクエストボディをJSON形式で読み込み
     data = json.loads(request.body)
     username = data['userName']  # ユーザー名を取得
@@ -111,13 +106,12 @@ def registration(request):
     last_name = data['lastName']  # 姓を取得
     email = data['email']  # メールアドレスを取得
     username_exist = False  # ユーザー名が既に存在するかどうかのフラグ
-    # email_exist = False  # メールアドレスが既に存在するかどうかのフラグ（現在は未使用）
 
     try:
         # ユーザー名がすでに存在するかチェック
         User.objects.get(username=username)  # 同じユーザー名が存在するか確認
         username_exist = True  # 存在する場合、フラグをTrueに設定
-    except ObjectDoesNotExist:
+    except User.DoesNotExist:
         # ユーザーが存在しない場合、新しいユーザーとしてログを記録
         logger.debug("{} is new user".format(username))  # ユーザー名が新しいことをログに記録
 
@@ -157,7 +151,7 @@ def get_cars(request):
         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
 
     return JsonResponse({"CarModels":cars})  # 車種とメーカー名のリストをJSON形式で返す
-    
+
 
 # ディーラー一覧ページの表示を行う `get_dealerships` 関数
 def get_dealerships(request, state="All"):  #Stateのデフォルト値は "All"
@@ -168,7 +162,7 @@ def get_dealerships(request, state="All"):  #Stateのデフォルト値は "All"
         endpoint = "/fetchDealers/"+state
     dealerships = get_request(endpoint)  # 指定されたエンドポイントからディーラー情報を取得
 
-    print("dealerships:",dealerships,dealerships)
+    print("dealerships:",dealerships)
 
     return JsonResponse({"status":200,"dealers":dealerships})  # ディーラー情報をJSON形式で返す
 
@@ -182,41 +176,39 @@ def get_dealer_reviews(request, dealer_id):
     if(dealer_id):
         # ディーラーIDに基づいてレビュー情報を取得するエンドポイントを設定
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
-        
+
         print("通過確認2")
 
         # get_request関数を使用して、指定されたエンドポイントからレビュー情報を取得
         reviews = get_request(endpoint)
 
         print("reviews:",reviews)
-        print("reviewsの型:", type(reviews))
-        print("reviewsの内容:", reviews)
-        
+
         # 取得したレビューごとに処理を行う
         for review_detail in reviews:
 
             print("通過確認3")
-            print("review_detail['review']:",review_detail['review'])
+            print("review_detail['review']:", review_detail['review'])
 
             # レビューの感情分析を行う（レビューのテキストを渡す）
             response = analyze_review_sentiments(review_detail['review'])
 
             print("response:",response)
-            
+
             # 感情分析の結果を表示
             print(response)
-            
+
             # レビューに感情分析結果（sentiment）を追加
             review_detail['sentiment'] = response['sentiment']
 
             print("通過確認4")
-        
+
         # レビュー情報をJSON形式で返す
-        return JsonResponse({"status":200,"reviews":reviews})
-    
+        return JsonResponse({"status": 200, "reviews": reviews})
+
     # ディーラーIDが提供されていない場合、Bad Requestエラーレスポンスを返す
-    else:
-        return JsonResponse({"status":400,"message":"Bad Request"})
+    return JsonResponse({"status": 400, "message": "Dealer ID not provided"})
+
 
 
 # ディーラーの詳細情報を表示する `get_dealer_details` 関数
