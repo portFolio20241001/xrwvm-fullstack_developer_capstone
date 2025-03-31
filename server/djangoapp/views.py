@@ -139,7 +139,7 @@ def get_cars(request):
 
     print(count)  # カウント結果をコンソールに出力
 
-    if count == 0:  # スペースなしで条件を記述
+    if (count == 0):  # スペースなしで条件を記述
         initiate()  # CarMakeが空の場合、初期データを投入
 
     # CarModelと関連するCarMakeを取得
@@ -167,9 +167,10 @@ def get_dealerships(request, state="All"):  # Stateのデフォルト値は "All
         endpoint = "/fetchDealers/"+state
     dealerships = get_request(endpoint)  # 指定されたエンドポイントからディーラー情報を取得
 
-    print("dealerships:",dealerships)
+    print("dealerships:", dealerships)
 
-    return JsonResponse({"status":200,"dealers":dealerships})  # ディーラー情報をJSON形式で返す
+    # ディーラー情報をJSON形式で返す
+    return JsonResponse({"status": 200,"dealers": dealerships})  
 
 
 # ディーラーのレビュー一覧を表示する `get_dealer_reviews` 関数
@@ -178,7 +179,7 @@ def get_dealer_reviews(request, dealer_id):
     print("通過確認1")
 
     # ディーラーIDが提供されている場合
-    if(dealer_id):
+    if (dealer_id):
         # ディーラーIDに基づいてレビュー情報を取得するエンドポイントを設定
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
 
@@ -198,7 +199,7 @@ def get_dealer_reviews(request, dealer_id):
             # レビューの感情分析を行う（レビューのテキストを渡す）
             response = analyze_review_sentiments(review_detail['review'])
 
-            print("response:",response)
+            print("response:", response)
 
             # 感情分析の結果を表示
             print(response)
@@ -226,10 +227,10 @@ def get_dealer_details(request, dealer_id):
         # `get_request` を呼び出して指定されたエンドポイントからデータを取得
         dealership = get_request(endpoint)
         # 成功した場合、ディーラー情報を JSON 形式で返す（ステータスコード 200）
-        return JsonResponse({"status":200,"dealer":dealership})
+        return JsonResponse({"status": 200,"dealer": dealership})
     else:
         # `dealer_id` が提供されていない場合、400（Bad Request）エラーメッセージを返す
-        return JsonResponse({"status":400,"message":"Bad Request"})
+        return JsonResponse({"status": 400,"message": "Bad Request"})
 
 
 # ユーザーがレビューを投稿するための関数
@@ -244,13 +245,13 @@ def add_review(request):
             response = post_review(data)
             
             # 成功した場合、ステータス200を返す
-            return JsonResponse({"status":200})
+            return JsonResponse({"status": 200})
         
         except:
             # エラーが発生した場合、ステータス401とエラーメッセージを返す
-            return JsonResponse({"status":401,"message":"Error in posting review"})
+            return JsonResponse({"status": 401,"message": "Error in posting review"})
     
     else:
         # ユーザーがログインしていない場合、ステータス403とメッセージを返す（未認証）
-        return JsonResponse({"status":403,"message":"Unauthorized"})
+        return JsonResponse({"status": 403,"message": "Unauthorized"})
 
