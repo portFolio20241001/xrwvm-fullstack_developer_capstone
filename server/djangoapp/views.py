@@ -1,6 +1,6 @@
 # 必要なインポートをコメントアウト（必要に応じて有効化する）
 
-#--------------------　不要関数START　------------------------
+# --------------------　不要関数START　------------------------
 
 # Djangoのrender関数をインポート
 # from django.shortcuts import render
@@ -14,10 +14,11 @@
 # datetimeモジュールをインポート
 # from datetime import datetime
 
-#--------------------　不要関数END　------------------------
-
 # HttpResponseとHttpResponseRedirectをインポート
-from django.http import HttpResponseRedirect, HttpResponse
+# from django.http import HttpResponseRedirect, HttpResponse
+
+# --------------------　不要関数END　------------------------
+
 
 # Djangoのユーザーモデルをインポート
 from django.contrib.auth.models import User
@@ -25,13 +26,8 @@ from django.contrib.auth.models import User
 # CarMakeとCarModelをインポート
 from .models import CarMake, CarModel
 
-
 # Djangoのlogout関数をインポート
 from django.contrib.auth import logout
-
-
-
-
 
 # JsonResponseをインポート（APIのレスポンスとしてJSONを返すため）
 from django.http import JsonResponse
@@ -58,11 +54,11 @@ from .populate import initiate
 from .restapis import get_request, analyze_review_sentiments, post_review
 
 
-
 # ロガーのインスタンスを取得
 logger = logging.getLogger(__name__)
 
 # ここからビュー関数を定義
+
 
 # ログイン要求を処理する `login_user` 関数
 @csrf_exempt  # CSRFトークンをチェックしない（外部API呼び出し用）
@@ -100,6 +96,7 @@ def logout_user(request):
     except Exception as e:
         # エラーが発生した場合、詳細なエラー情報を返す
         return JsonResponse({"error": str(e)}, status=500)
+
 
 # ユーザー登録を処理する
 @csrf_exempt  # CSRF検証を免除（セキュリティリスクがあるので注意）
@@ -162,6 +159,7 @@ def get_dealerships(request, state="All"):  #Stateのデフォルト値は "All"
 
     return JsonResponse({"status":200,"dealers":dealerships})  # ディーラー情報をJSON形式で返す
 
+
 # ディーラーのレビュー一覧を表示する `get_dealer_reviews` 関数
 def get_dealer_reviews(request, dealer_id):
 
@@ -206,7 +204,6 @@ def get_dealer_reviews(request, dealer_id):
     # ディーラーIDが提供されていない場合、Bad Requestエラーレスポンスを返す
     else:
         return JsonResponse({"status":400,"message":"Bad Request"})
-
 
 
 # ディーラーの詳細情報を表示する `get_dealer_details` 関数
