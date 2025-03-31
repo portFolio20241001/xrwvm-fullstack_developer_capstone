@@ -251,7 +251,8 @@ def add_review(request):
             # エラーが発生した場合、ステータス401とエラーメッセージを返す
             return JsonResponse(
                 {
-                    "status": 401, "message": f"Error in posting review: {str(e)}"
+                    "status": 401,
+                    "message": f"Error in posting review: {str(e)}"
                 }
             )
 
