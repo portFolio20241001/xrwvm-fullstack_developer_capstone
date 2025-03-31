@@ -235,20 +235,21 @@ def get_dealer_details(request, dealer_id):
 # ユーザーがレビューを投稿するための関数
 def add_review(request):
     # ユーザーがログインしているかどうかを確認
-    if(request.user.is_anonymous == False):
+    if not request.user.is_anonymous:
         # リクエストボディをJSON形式で解析（レビュー情報）
         data = json.loads(request.body)
-        
+
         try:
             # `post_review` 関数を使ってレビューを投稿
-            response = post_review(data)
+            # response = post_review(data)
+            post_review(data)
             
             # 成功した場合、ステータス200を返す
             return JsonResponse({"status": 200})
         
-        except:
+        except Exception as e:
             # エラーが発生した場合、ステータス401とエラーメッセージを返す
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse({"status": 401, "message": f"Error in posting review: {str(e)}"})
     
     else:
         # ユーザーがログインしていない場合、ステータス403とメッセージを返す（未認証）
