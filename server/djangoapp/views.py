@@ -161,7 +161,7 @@ def get_cars(request):
 # ディーラー一覧ページの表示を行う `get_dealerships` 関数
 def get_dealerships(request, state="All"):  # Stateのデフォルト値は "All"
 
-    if(state == "All"): 
+    if (state == "All"):
         endpoint = "/fetchDealers"
     else:
         endpoint = "/fetchDealers/"+state
