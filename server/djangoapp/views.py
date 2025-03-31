@@ -170,7 +170,7 @@ def get_dealerships(request, state="All"):  # Stateのデフォルト値は "All
     print("dealerships:", dealerships)
 
     # ディーラー情報をJSON形式で返す
-    return JsonResponse({"status": 200 ,"dealers": dealerships})
+    return JsonResponse({"status": 200, "dealers": dealerships})
 
 
 # ディーラーのレビュー一覧を表示する `get_dealer_reviews` 関数
@@ -220,16 +220,16 @@ def get_dealer_reviews(request, dealer_id):
 # `get_dealer_details` 関数の定義（特定のディーラーの詳細情報を取得するためのビュー）
 def get_dealer_details(request, dealer_id):
     # `dealer_id` が提供されている場合
-    if(dealer_id):
+    if (dealer_id):
         # ディーラーの詳細情報を取得するためのエンドポイントを設定
         endpoint = "/fetchDealer/"+str(dealer_id)
         # `get_request` を呼び出して指定されたエンドポイントからデータを取得
         dealership = get_request(endpoint)
         # 成功した場合、ディーラー情報を JSON 形式で返す（ステータスコード 200）
-        return JsonResponse({"status": 200,"dealer": dealership})
+        return JsonResponse({"status": 200, "dealer": dealership})
     else:
         # `dealer_id` が提供されていない場合、400（Bad Request）エラーメッセージを返す
-        return JsonResponse({"status": 400,"message": "Bad Request"})
+        return JsonResponse({"status": 400, "message": "Bad Request"})
 
 
 # ユーザーがレビューを投稿するための関数
@@ -248,9 +248,9 @@ def add_review(request):
         
         except:
             # エラーが発生した場合、ステータス401とエラーメッセージを返す
-            return JsonResponse({"status": 401,"message": "Error in posting review"})
+            return JsonResponse({"status": 401, "message": "Error in posting review"})
     
     else:
         # ユーザーがログインしていない場合、ステータス403とメッセージを返す（未認証）
-        return JsonResponse({"status": 403,"message": "Unauthorized"})
+        return JsonResponse({"status": 403, "message": "Unauthorized"})
 
