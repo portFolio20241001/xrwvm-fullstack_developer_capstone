@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='CarMake',
             fields=[
                 ('id', models.BigAutoField(
-                    auto_created=True, primary_key=True, 
+                    auto_created=True, primary_key=True,
                     serialize=False, verbose_name='ID')
                 ),
                 ('name', models.CharField(max_length=100)),
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
             name='CarModel',
             fields=[
                 ('id', models.BigAutoField(
-                    auto_created=True, primary_key=True, 
+                    auto_created=True, primary_key=True,
                     serialize=False, verbose_name='ID')
                 ),
                 ('name', models.CharField(max_length=100)),
@@ -49,7 +49,9 @@ class Migration(migrations.Migration):
                     ]
                 )),
                 ('car_make', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE, to='djangoapp.carmake')),
+                    on_delete=django.db.models.deletion.CASCADE, 
+                    to='djangoapp.carmake')
+                ),
             ],
         ),
     ]
