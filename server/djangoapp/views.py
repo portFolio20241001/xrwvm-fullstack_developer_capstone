@@ -1,19 +1,68 @@
-# 必要なインポートのみ有効化
+# 必要なインポートをコメントアウト（必要に応じて有効化する）
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
-from django.contrib.auth import logout, login, authenticate
+#--------------------　不要関数START　------------------------
+
+# Djangoのrender関数をインポート
+# from django.shortcuts import render
+
+# Djangoのメッセージ機能をインポート
+# from django.contrib import messages
+
+# get_object_or_404、render、redirect関数をインポート
+# from django.shortcuts import get_object_or_404, render, redirect
+
+# datetimeモジュールをインポート
+# from datetime import datetime
+
+#--------------------　不要関数END　------------------------
+
+# HttpResponseとHttpResponseRedirectをインポート
+from django.http import HttpResponseRedirect, HttpResponse
+
+# Djangoのユーザーモデルをインポート
 from django.contrib.auth.models import User
-from django.contrib import messages
-from datetime import datetime
-import json
+
+# CarMakeとCarModelをインポート
+from .models import CarMake, CarModel
+
+
+# Djangoのlogout関数をインポート
+from django.contrib.auth import logout
+
+
+
+
+
+# JsonResponseをインポート（APIのレスポンスとしてJSONを返すため）
+from django.http import JsonResponse
+
+# login, authenticate関数をインポート（認証処理用）
+from django.contrib.auth import login, authenticate
+
+# ロギングモジュールをインポート（ログ出力用）
 import logging
+
+# jsonモジュールをインポート（リクエストボディのJSON読み込み用）
+import json
+
+# CSRFトークン検証を無効化するデコレーターをインポート
 from django.views.decorators.csrf import csrf_exempt
+
+# populateモジュールをインポート（初期データ投入用）
 from .populate import initiate
+
+# restapis.py モジュールから関数をインポート
+#       get_request: 指定されたエンドポイントからデータを取得する関数
+#       analyze_review_sentiments: レビューの感情を分析する関数
+#       post_review: レビューをバックエンドに送信する関数
 from .restapis import get_request, analyze_review_sentiments, post_review
+
+
 
 # ロガーのインスタンスを取得
 logger = logging.getLogger(__name__)
+
+# ここからビュー関数を定義
 
 # ログイン要求を処理する `login_user` 関数
 @csrf_exempt  # CSRFトークンをチェックしない（外部API呼び出し用）
@@ -39,6 +88,9 @@ def login_user(request):
     # JSON形式でレスポンスを返す
     return JsonResponse(data)
 
+
+# 以下、他の機能の雛形（まだ実装されていない）
+
 # ログアウト要求を処理する `logout_user` 関数
 def logout_user(request):
     try:
@@ -52,6 +104,8 @@ def logout_user(request):
 # ユーザー登録を処理する
 @csrf_exempt  # CSRF検証を免除（セキュリティリスクがあるので注意）
 def registration(request):
+    context = {}  # 空のコンテキストを作成（後で使う場合がある）
+
     # リクエストボディをJSON形式で読み込み
     data = json.loads(request.body)
     username = data['userName']  # ユーザー名を取得
@@ -60,6 +114,7 @@ def registration(request):
     last_name = data['lastName']  # 姓を取得
     email = data['email']  # メールアドレスを取得
     username_exist = False  # ユーザー名が既に存在するかどうかのフラグ
+    email_exist = False  # メールアドレスが既に存在するかどうかのフラグ（現在は未使用）
 
     try:
         # ユーザー名がすでに存在するかチェック
@@ -82,6 +137,7 @@ def registration(request):
         data = {"userName": username, "error": "Already Registered"}  # 既存ユーザーエラーメッセージ
         return JsonResponse(data)  # エラーレスポンスを返す
 
+
 def get_cars(request):
     count = CarMake.objects.filter().count()  # CarMakeの数をカウント
     print(count)  # カウント結果をコンソールに出力
@@ -92,3 +148,102 @@ def get_cars(request):
     for car_model in car_models:  # 各CarModelに対してループ
         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})  # 車種とメーカー名をリストに追加
     return JsonResponse({"CarModels":cars})  # 車種とメーカー名のリストをJSON形式で返す
+    
+
+# ディーラー一覧ページの表示を行う `get_dealerships` 関数
+def get_dealerships(request, state="All"):  #Stateのデフォルト値は "All"
+    if(state == "All"):
+        endpoint = "/fetchDealers"
+    else:
+        endpoint = "/fetchDealers/"+state
+    dealerships = get_request(endpoint)  # 指定されたエンドポイントからディーラー情報を取得
+
+    print("dealerships:",dealerships,dealerships)
+
+    return JsonResponse({"status":200,"dealers":dealerships})  # ディーラー情報をJSON形式で返す
+
+# ディーラーのレビュー一覧を表示する `get_dealer_reviews` 関数
+def get_dealer_reviews(request, dealer_id):
+
+    print("通過確認1")
+
+    # ディーラーIDが提供されている場合
+    if(dealer_id):
+        # ディーラーIDに基づいてレビュー情報を取得するエンドポイントを設定
+        endpoint = "/fetchReviews/dealer/"+str(dealer_id)
+        
+        print("通過確認2")
+
+        # get_request関数を使用して、指定されたエンドポイントからレビュー情報を取得
+        reviews = get_request(endpoint)
+
+        print("reviews:",reviews)
+        print("reviewsの型:", type(reviews))
+        print("reviewsの内容:", reviews)
+        
+        # 取得したレビューごとに処理を行う
+        for review_detail in reviews:
+
+            print("通過確認3")
+            print("review_detail['review']:",review_detail['review'])
+
+            # レビューの感情分析を行う（レビューのテキストを渡す）
+            response = analyze_review_sentiments(review_detail['review'])
+
+            print("response:",response)
+            
+            # 感情分析の結果を表示
+            print(response)
+            
+            # レビューに感情分析結果（sentiment）を追加
+            review_detail['sentiment'] = response['sentiment']
+
+            print("通過確認4")
+        
+        # レビュー情報をJSON形式で返す
+        return JsonResponse({"status":200,"reviews":reviews})
+    
+    # ディーラーIDが提供されていない場合、Bad Requestエラーレスポンスを返す
+    else:
+        return JsonResponse({"status":400,"message":"Bad Request"})
+
+
+
+# ディーラーの詳細情報を表示する `get_dealer_details` 関数
+# `get_dealer_details` 関数の定義（特定のディーラーの詳細情報を取得するためのビュー）
+def get_dealer_details(request, dealer_id):
+    # `dealer_id` が提供されている場合
+    if(dealer_id):
+        # ディーラーの詳細情報を取得するためのエンドポイントを設定
+        endpoint = "/fetchDealer/"+str(dealer_id)
+        # `get_request` を呼び出して指定されたエンドポイントからデータを取得
+        dealership = get_request(endpoint)
+        # 成功した場合、ディーラー情報を JSON 形式で返す（ステータスコード 200）
+        return JsonResponse({"status":200,"dealer":dealership})
+    else:
+        # `dealer_id` が提供されていない場合、400（Bad Request）エラーメッセージを返す
+        return JsonResponse({"status":400,"message":"Bad Request"})
+
+
+# ユーザーがレビューを投稿するための関数
+def add_review(request):
+    # ユーザーがログインしているかどうかを確認
+    if(request.user.is_anonymous == False):
+        # リクエストボディをJSON形式で解析（レビュー情報）
+        data = json.loads(request.body)
+        
+        try:
+            # `post_review` 関数を使ってレビューを投稿
+            response = post_review(data)
+            
+            # 成功した場合、ステータス200を返す
+            return JsonResponse({"status":200})
+        
+        except:
+            # エラーが発生した場合、ステータス401とエラーメッセージを返す
+            return JsonResponse({"status":401,"message":"Error in posting review"})
+    
+    else:
+        # ユーザーがログインしていない場合、ステータス403とメッセージを返す（未認証）
+        return JsonResponse({"status":403,"message":"Unauthorized"})
+
