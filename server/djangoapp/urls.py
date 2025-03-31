@@ -27,7 +27,7 @@ urlpatterns = [
     path(route='logout', view=views.logout_user, name='logout'),
 
     # Car情報取得用のURLパス（`/get_cars` で get_cars ビューを呼び出す）
-    path(route='get_cars', view=views.get_cars, name ='getcars'),
+    path(route='get_cars', view=views.get_cars, name='getcars'),
 
     # ディーラー情報取得用のURLパス（`/get_dealers` で get_dealerships ビューを呼び出す）
     path(route='get_dealers', view=views.get_dealerships, name='get_dealers'),
@@ -39,10 +39,7 @@ urlpatterns = [
     path(route='dealer/<int:dealer_id>', view=views.get_dealer_details, name='dealer_details'),
 
     # ディーラーのレビューを取得するURLパス（`/reviews/dealer/<dealer_id>` で get_dealer_reviews ビューを呼び出す）
-    path(route='reviews/dealer/<int:dealer_id>', view=views.get_dealer_reviews, name='dealer_details'),
-
-    # ディーラーのレビュー表示用のURLパス（現在コメントアウト中）
-    # path('dealer_reviews', views.get_dealer_reviews, name='dealer_reviews'),
+    path(route='reviews/dealer/<int:dealer_id>', view=views.get_dealer_reviews, name='dealer_reviews'),
 
     # レビュー追加用のURLパス
     path(route='add_review', view=views.add_review, name='add_review'),
