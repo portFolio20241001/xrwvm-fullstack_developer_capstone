@@ -54,7 +54,7 @@ const PostReview = () => {
       "car_year": year,
     });
 
-    console.log(jsoninput); // デバッグ用にJSONオブジェクトを表示
+    console.log("jsoninput:",jsoninput); // デバッグ用にJSONオブジェクトを表示
 
     // レビュー投稿リクエストを送信
     const res = await fetch(review_url, {
@@ -65,8 +65,13 @@ const PostReview = () => {
       body: jsoninput,
     });
 
+    console.log("res:",res); 
+
     // レスポンスをJSON形式で受け取る
     const json = await res.json();
+
+    console.log("json.status:",json.status); 
+
     if (json.status === 200) {
       // 投稿が成功した場合、ディーラーのページにリダイレクト
       window.location.href = window.location.origin + "/dealer/" + id;

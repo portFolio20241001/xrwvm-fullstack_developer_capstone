@@ -234,8 +234,12 @@ def get_dealer_details(request, dealer_id):
 
 # ユーザーがレビューを投稿するための関数
 def add_review(request):
+
+    print("request.user.is_anonymous:", request.user.is_anonymous)
+
+
     # ユーザーがログインしているかどうかを確認
-    if not request.user.is_anonymous:
+    if (request.user.is_anonymous == False):
         # リクエストボディをJSON形式で解析（レビュー情報）
         data = json.loads(request.body)
 
