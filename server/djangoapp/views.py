@@ -55,7 +55,6 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 # ロガーのインスタンスを取得
 logger = logging.getLogger(__name__)
 
-# ここからビュー関数を定義
 
 # ログイン要求を処理する `login_user` 関数
 @csrf_exempt  # CSRFトークンをチェックしない（外部API呼び出し用）
@@ -143,7 +142,8 @@ def get_cars(request):
     if(count == 0):
         initiate()  # CarMakeが空の場合、初期データを投入
 
-    car_models = CarModel.objects.select_related('car_make')  # CarModelと関連するCarMakeを取得
+    # CarModelと関連するCarMakeを取得
+    car_models = CarModel.objects.select_related('car_make')  
     cars = []  # 車情報を格納するリスト
 
     for car_model in car_models:  # 各CarModelに対してループ
