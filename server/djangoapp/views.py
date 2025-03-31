@@ -139,16 +139,21 @@ def get_cars(request):
 
     print(count)  # カウント結果をコンソールに出力
 
-    if(count == 0):
+    if( count == 0):
         initiate()  # CarMakeが空の場合、初期データを投入
 
     # CarModelと関連するCarMakeを取得
-    car_models = CarModel.objects.select_related('car_make')  
+    car_models = CarModel.objects.select_related('car_make')
     cars = []  # 車情報を格納するリスト
 
     for car_model in car_models:  # 各CarModelに対してループ
         # 車種とメーカー名をリストに追加
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append(
+            {
+                "CarModel": car_model.name,
+                "CarMake": car_model.car_make.name
+            }
+        )
 
     return JsonResponse({"CarModels":cars})  # 車種とメーカー名のリストをJSON形式で返す
 
