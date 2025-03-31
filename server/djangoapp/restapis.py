@@ -1,4 +1,3 @@
-# 必要なライブラリをインポート
 import requests  # HTTPリクエストを送信するためのライブラリ
 import os  # 環境変数を取得するためのライブラリ
 from dotenv import load_dotenv  # .envファイルの環境変数を読み込むライブラリ
@@ -10,7 +9,9 @@ load_dotenv()
 backend_url = os.getenv("backend_url", default="http://localhost:3030")
 
 # 環境変数から感情分析APIのURLを取得（デフォルトはローカルサーバー）
-sentiment_analyzer_url = os.getenv("sentiment_analyzer_url", default="http://localhost:5050/")
+sentiment_analyzer_url = os.getenv(
+    "sentiment_analyzer_url", default="http://localhost:5050/"
+)
 
 
 # GETリクエストを送信する関数
@@ -26,17 +27,16 @@ def get_request(endpoint, **kwargs):
         dict: APIレスポンスのJSONデータ（エラー時はNone）
     """
     params = ""  # クエリパラメータの初期化
-    if kwargs:  # kwargsが存在する場合
-        for key, value in kwargs.items():  # 各クエリパラメータを処理
-            params += f"{key}={value}&"  # パラメータをURLエンコードして追加
+    if kwargs:
+        for key, value in kwargs.items():
+            params += f"{key}={value}&"
 
-    # 完成したリクエストURL
     request_url = f"{backend_url}{endpoint}?{params}"
 
-    print(f"GETリクエストを送信: {request_url}")  # リクエストURLの出力
+    print(f"GETリクエストを送信: {request_url}")
     try:
         response = requests.get(request_url)
-        return response.json()  # JSONレスポンスを返す
+        return response.json()
     except Exception as e:
         print(f"ネットワークエラー: {e}")
         return None
@@ -75,7 +75,7 @@ def post_review(data_dict):
         dict: APIレスポンスのJSONデータ
     """
     request_url = f"{backend_url}/insert_review"
-    
+
     try:
         response = requests.post(request_url, json=data_dict)
         print(response.json())
