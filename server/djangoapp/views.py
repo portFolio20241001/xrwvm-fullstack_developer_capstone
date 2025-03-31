@@ -243,15 +243,18 @@ def add_review(request):
             # `post_review` 関数を使ってレビューを投稿
             # response = post_review(data)
             post_review(data)
-            
+
             # 成功した場合、ステータス200を返す
             return JsonResponse({"status": 200})
-        
+
         except Exception as e:
             # エラーが発生した場合、ステータス401とエラーメッセージを返す
-            return JsonResponse({"status": 401, "message": f"Error in posting review: {str(e)}"})
-    
+            return JsonResponse(
+                {
+                    "status": 401, "message": f"Error in posting review: {str(e)}"
+                }
+            )
+
     else:
         # ユーザーがログインしていない場合、ステータス403とメッセージを返す（未認証）
         return JsonResponse({"status": 403, "message": "Unauthorized"})
-
