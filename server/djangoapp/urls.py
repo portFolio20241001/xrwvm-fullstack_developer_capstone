@@ -43,15 +43,15 @@ urlpatterns = [
          name='dealer_details'),
 
     # ディーラーのレビューを取得するURLパス
-    #（`/reviews/dealer/<dealer_id>` で get_dealer_reviews ビューを呼び出す）
+    # （`/reviews/dealer/<dealer_id>` で get_dealer_reviews ビューを呼び出す）
     path(route='reviews/dealer/<int:dealer_id>',
          view=views.get_dealer_reviews,
          name='dealer_reviews'),
 
     # レビュー追加用のURLパス
-    path(route='add_review', 
-         view=views.add_review, 
+    path(route='add_review',
+         view=views.add_review,
          name='add_review'),
-    
+
     # メディアファイルの静的ファイルを処理するための設定
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
