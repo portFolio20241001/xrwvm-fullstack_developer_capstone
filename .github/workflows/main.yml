@@ -1,0 +1,48 @@
+name: 'Lint Code'  # ワークフローの名前
+
+on:  # トリガー条件の設定
+  push:
+    branches: [master, main]  # masterまたはmainブランチへのプッシュ時に実行
+  pull_request:
+    branches: [master, main]  # masterまたはmainブランチへのプルリクエスト時に実行
+
+jobs:  # ジョブの定義
+  lint_python:  # Pythonファイルのリント
+    name: Lint Python Files  # ジョブの名前
+    runs-on: ubuntu-latest  # 実行環境（Ubuntuの最新バージョン）
+    steps:  # ステップの定義
+      - name: Checkout Repository  # リポジトリをクローンするステップ
+        uses: actions/checkout@v3  # GitHub公式のcheckoutアクションを使用
+
+      - name: Set up Python  # Python環境のセットアップ
+        uses: actions/setup-python@v4  # Pythonのセットアップアクション
+        with:
+          python-version: 3.12  # 使用するPythonのバージョン
+
+      - name: Install dependencies  # 依存関係のインストール
+        run: |
+          python -m pip install --upgrade pip  # pipを最新バージョンにアップグレード
+          pip install flake8  # flake8をインストール（Pythonのリントツール）
+
+      - name: Run Linter  # リントの実行
+        run: |
+          find . -name "*.py" -exec flake8 {} +  # リポジトリ内のPythonファイルをflake8でチェック
+
+  lint_js:  # JavaScriptファイルのリント
+    name: Lint JavaScript Files  # ジョブの名前
+    runs-on: ubuntu-latest  # 実行環境（Ubuntuの最新バージョン）
+    steps:  # ステップの定義
+      - name: Checkout Repository  # リポジトリをクローンするステップ
+        uses: actions/checkout@v3  # GitHub公式のcheckoutアクションを使用
+
+      - name: Install Node.js  # Node.js環境のセットアップ
+        uses: actions/setup-node@v3  # Node.jsのセットアップアクション
+        with:
+          node-version: 14  # 使用するNode.jsのバージョン
+
+      - name: Install JSHint  # JSHintのインストール
+        run: npm install jshint --global  # JSHintをグローバルインストール
+
+      - name: Run Linter  # リントの実行
+        run: |
+          find ./server/database -name "*.js" -exec jshint {} +  # server/databaseディレクトリ内のJavaScriptファイルをjshintでチェック
