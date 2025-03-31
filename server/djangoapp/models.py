@@ -1,7 +1,9 @@
 # Djangoのモデルコードを追加する前に、以下のインポートを解除してください
 
 from django.db import models  # Djangoのデータベースモデルをインポート
-from django.core.validators import MaxValueValidator, MinValueValidator  # バリデーターをインポート
+# バリデーターをインポート
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 # 車のメーカーを表すモデル
 class CarMake(models.Model):
@@ -14,6 +16,7 @@ class CarMake(models.Model):
     # オブジェクトを文字列として返すためのメソッド
     def __str__(self):
         return self.name  # 名前を文字列として返す
+
 
 # 車のモデルを表すモデル
 class CarModel(models.Model):
