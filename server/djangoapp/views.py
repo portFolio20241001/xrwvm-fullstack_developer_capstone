@@ -101,7 +101,7 @@ def logout_user(request):
 # ユーザー登録を処理する
 @csrf_exempt  # CSRF検証を免除（セキュリティリスクがあるので注意）
 def registration(request):
-    context = {}  # 空のコンテキストを作成（後で使う場合がある）
+    # context = {}  # 空のコンテキストを作成（後で使う場合がある）
 
     # リクエストボディをJSON形式で読み込み
     data = json.loads(request.body)
@@ -111,44 +111,57 @@ def registration(request):
     last_name = data['lastName']  # 姓を取得
     email = data['email']  # メールアドレスを取得
     username_exist = False  # ユーザー名が既に存在するかどうかのフラグ
-    email_exist = False  # メールアドレスが既に存在するかどうかのフラグ（現在は未使用）
+    # email_exist = False  # メールアドレスが既に存在するかどうかのフラグ（現在は未使用）
 
     try:
         # ユーザー名がすでに存在するかチェック
         User.objects.get(username=username)  # 同じユーザー名が存在するか確認
         username_exist = True  # 存在する場合、フラグをTrueに設定
-    except:
+    except ObjectDoesNotExist:
         # ユーザーが存在しない場合、新しいユーザーとしてログを記録
         logger.debug("{} is new user".format(username))  # ユーザー名が新しいことをログに記録
 
     # もしユーザー名が存在しなければ、新規ユーザーとして登録
     if not username_exist:
         # `auth_user`テーブルに新しいユーザーを作成
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+        user = User.objects.create_user(
+            username=username, first_name=first_name,
+            last_name=last_name, password=password, email=email)
+
         # 新規ユーザーとしてログインし、リストページにリダイレクト
         login(request, user)  # ユーザーをログインさせる
-        data = {"userName": username, "status": "Authenticated"}  # 登録成功のレスポンスデータを作成
+
+        # 登録成功のレスポンスデータを作成
+        data = {"userName": username, "status": "Authenticated"}
+
         return JsonResponse(data)  # 登録成功のJSONレスポンスを返す
     else:
         # 既に登録されているユーザー名の場合、エラーメッセージを返す
-        data = {"userName": username, "error": "Already Registered"}  # 既存ユーザーエラーメッセージ
+        data = {"userName": username, "error": "Already Registered"}
         return JsonResponse(data)  # エラーレスポンスを返す
 
 
 def get_cars(request):
     count = CarMake.objects.filter().count()  # CarMakeの数をカウント
+
     print(count)  # カウント結果をコンソールに出力
+
     if(count == 0):
         initiate()  # CarMakeが空の場合、初期データを投入
+
     car_models = CarModel.objects.select_related('car_make')  # CarModelと関連するCarMakeを取得
     cars = []  # 車情報を格納するリスト
+
     for car_model in car_models:  # 各CarModelに対してループ
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})  # 車種とメーカー名をリストに追加
+        # 車種とメーカー名をリストに追加
+        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+
     return JsonResponse({"CarModels":cars})  # 車種とメーカー名のリストをJSON形式で返す
     
 
 # ディーラー一覧ページの表示を行う `get_dealerships` 関数
 def get_dealerships(request, state="All"):  #Stateのデフォルト値は "All"
+
     if(state == "All"):
         endpoint = "/fetchDealers"
     else:
