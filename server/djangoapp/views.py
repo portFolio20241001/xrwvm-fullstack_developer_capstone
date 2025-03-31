@@ -237,9 +237,8 @@ def add_review(request):
 
     print("request.user.is_anonymous:", request.user.is_anonymous)
 
-
     # ユーザーがログインしているかどうかを確認
-    if (request.user.is_anonymous == False):
+    if not request.user.is_anonymous:
         # リクエストボディをJSON形式で解析（レビュー情報）
         data = json.loads(request.body)
 
