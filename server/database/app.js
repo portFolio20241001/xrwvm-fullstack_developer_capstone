@@ -27,12 +27,12 @@ const Dealerships = require('./dealership');  // ディーラーのモデルを�
 try {
   // レビューのデータを全削除し、再度データを挿入
   Reviews.deleteMany({}).then(() => {
-    Reviews.insertMany(reviews_data['reviews']);
+    Reviews.insertMany(reviews_data.reviews);
   });
   
   // ディーラーのデータを全削除し、再度データを挿入
   Dealerships.deleteMany({}).then(() => {
-    Dealerships.insertMany(dealerships_data['dealerships']);
+    Dealerships.insertMany(dealerships_data.dealerships);
   });
 } catch (error) {
   // エラーが発生した場合、エラーレスポンスを返す
@@ -105,19 +105,19 @@ app.get('/fetchDealer/:id', async (req, res) => {
 app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
   data = JSON.parse(req.body);  // リクエストボディからJSONデータを取得
   const documents = await Reviews.find().sort({ id: -1 });  // 最新のレビューをID順で取得
-  let new_id = documents[0]['id'] + 1;  // 新しいレビューのIDを決定（最後のID + 1）
+  let new_id = documents[0].id + 1;  // 新しいレビューのIDを決定（最後のID + 1）
 
   // 新しいレビューを作成
   const review = new Reviews({
     "id": new_id,  // 新しいIDを設定
-    "name": data['name'],  // レビュー投稿者の名前
-    "dealership": data['dealership'],  // 関連するディーラーのID
-    "review": data['review'],  // レビューの内容
-    "purchase": data['purchase'],  // 購入有無
-    "purchase_date": data['purchase_date'],  // 購入日
-    "car_make": data['car_make'],  // 車のメーカー
-    "car_model": data['car_model'],  // 車のモデル
-    "car_year": data['car_year'],  // 車の年式
+    "name": data.name,  // レビュー投稿者の名前
+    "dealership": data.dealership,  // 関連するディーラーのID
+    "review": data.review,  // レビューの内容
+    "purchase": data.purchase,  // 購入有無
+    "purchase_date": data.purchase_date,  // 購入日
+    "car_make": data.car_make,  // 車のメーカー
+    "car_model": data.car_model,  // 車のモデル
+    "car_year": data.car_year,  // 車の年式
   });
 
   try {
