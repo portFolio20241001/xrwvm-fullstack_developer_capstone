@@ -139,7 +139,7 @@ def get_cars(request):
 
     print(count)  # カウント結果をコンソールに出力
 
-    if( count == 0):
+    if count == 0:  # スペースなしで条件を記述
         initiate()  # CarMakeが空の場合、初期データを投入
 
     # CarModelと関連するCarMakeを取得
