@@ -170,7 +170,7 @@ def get_dealerships(request, state="All"):  # Stateのデフォルト値は "All
     print("dealerships:", dealerships)
 
     # ディーラー情報をJSON形式で返す
-    return JsonResponse({"status": 200,"dealers": dealerships})  
+    return JsonResponse({"status": 200 ,"dealers": dealerships})
 
 
 # ディーラーのレビュー一覧を表示する `get_dealer_reviews` 関数
@@ -188,7 +188,7 @@ def get_dealer_reviews(request, dealer_id):
         # get_request関数を使用して、指定されたエンドポイントからレビュー情報を取得
         reviews = get_request(endpoint)
 
-        print("reviews:",reviews)
+        print("reviews:", reviews)
 
         # 取得したレビューごとに処理を行う
         for review_detail in reviews:
@@ -214,7 +214,6 @@ def get_dealer_reviews(request, dealer_id):
 
     # ディーラーIDが提供されていない場合、Bad Requestエラーレスポンスを返す
     return JsonResponse({"status": 400, "message": "Dealer ID not provided"})
-
 
 
 # ディーラーの詳細情報を表示する `get_dealer_details` 関数
