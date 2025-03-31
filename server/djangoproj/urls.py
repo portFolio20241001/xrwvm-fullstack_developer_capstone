@@ -53,4 +53,7 @@ urlpatterns = [
     # dealerページのテンプレートビュー設定
     path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),  # dealerページ用のテンプレートビュー
 
+    # postreviewページのテンプレートビュー設定
+    path('postreview/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # 静的ファイルのルーティング設定
