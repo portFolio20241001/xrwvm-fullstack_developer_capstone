@@ -1,0 +1,29 @@
+apiVersion: apps/v1  # APIバージョンの指定
+kind: Deployment  # リソースタイプとしてDeploymentを使用
+metadata:
+  labels:
+    run: dealership  # ラベルの指定（選択したリソースを識別するため）
+  name: dealership  # デプロイメントの名前
+spec:
+  replicas: 1  # レプリカ数（1インスタンスのみ）
+  selector:
+    matchLabels:
+      run: dealership  # デプロイメントを選択するためのラベル
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%  # ローリングアップデート時に最大で何パーセントの新しいPodを追加するか
+      maxUnavailable: 25%  # ローリングアップデート時に最大で何パーセントのPodが利用不可になるか
+    type: RollingUpdate  # ローリングアップデート方式
+  template:
+    metadata:
+      labels:
+        run: dealership  # Podのラベル
+    spec:
+      containers:
+      - image: us.icr.io/sn-labs-kenkouishi11/dealership:latest  # 使用するコンテナイメージ
+        imagePullPolicy: Always  # 常に最新のイメージをプルする設定
+        name: dealership  # コンテナの名前
+        ports:
+        - containerPort: 8000  # コンテナのポート設定
+          protocol: TCP  # 使用するプロトコル（TCP）
+      restartPolicy: Always  # コンテナが停止した場合、常に再起動する設定
