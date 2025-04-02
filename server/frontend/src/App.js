@@ -1,15 +1,9 @@
-// LoginPanelコンポーネントをインポート
-import LoginPanel from "./components/Login/Login";
-// RegisterPanelコンポーネントをインポート
-import RegisterPanel from "./components/Register/Register"; 
-// Dealersコンポーネントをインポート
-import Dealers from './components/Dealers/Dealers';
-// Dealerコンポーネントをインポート
-import Dealer from "./components/Dealers/Dealer"
-// PostReviewコンポーネントをインポート
-import PostReview from "./components/Dealers/PostReview"
-// React RouterのRoutesとRouteをインポート
-import { Routes, Route } from "react-router-dom";
+import LoginPanel from "./components/Login/Login";           // LoginPanelコンポーネントをインポート
+import RegisterPanel from "./components/Register/Register";  // RegisterPanelコンポーネントをインポート
+import Dealers from './components/Dealers/Dealers';          // Dealersコンポーネントをインポート
+import Dealer from "./components/Dealers/Dealer";            // Dealerコンポーネントをインポート
+import PostReview from "./components/Dealers/PostReview";    // PostReviewコンポーネントをインポート
+import { Routes, Route } from "react-router-dom";            // React RouterのRoutesとRouteをインポート
 
 function App() {
   return (
