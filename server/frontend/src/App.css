@@ -1,38 +1,38 @@
 .App {
-  text-align: center;
+  text-align: center; /* テキストを中央揃えにする */
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  height: 40vmin; /* ロゴの高さをビューポートの40%に設定 */
+  pointer-events: none; /* ロゴにマウスイベントを無効化（クリックできなくする） */
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin infinite 20s linear; /* ロゴに無限の回転アニメーションを適用 */
   }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #282c34; /* ヘッダーの背景色を指定 */
+  min-height: 100vh; /* ヘッダーの最小高さを画面全体に設定 */
+  display: flex; /* Flexboxでレイアウトを指定 */
+  flex-direction: column; /* アイテムを縦方向に並べる */
+  align-items: center; /* アイテムを水平方向に中央揃え */
+  justify-content: center; /* アイテムを垂直方向に中央揃え */
+  font-size: calc(10px + 2vmin); /* フォントサイズをビューポートサイズに応じて調整 */
+  color: white; /* フォント色を白に設定 */
 }
 
 .App-link {
-  color: #61dafb;
+  color: #61dafb; /* リンクの文字色を指定 */
 }
 
 @keyframes App-logo-spin {
   from {
-    transform: rotate(0deg);
+    transform: rotate(0deg); /* 回転開始時（0度） */
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg); /* 回転終了時（360度） */
   }
 }

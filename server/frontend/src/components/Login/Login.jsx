@@ -1,74 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react';    // ReactとuseStateフックをインポート
+import "./Login.css";                       // ログインページ用のCSSをインポート
+import Header from '../Header/Header';      // ヘッダーコンポーネントをインポート
 
-import "./Login.css";
-import Header from '../Header/Header';
+const Login = ({ onClose }) => {  // Loginコンポーネントを定義し、onCloseプロパティを受け取る
 
-const Login = ({ onClose }) => {
+  const [userName, setUserName] = useState("");  // ユーザー名の状態を管理
+  const [password, setPassword] = useState("");  // パスワードの状態を管理
+  const [open, setOpen] = useState(true);        // モーダルの開閉状態を管理
 
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [open,setOpen] = useState(true)
+  let login_url = window.location.origin + "/djangoapp/login";  // ログインAPIのエンドポイントを設定
 
-  let login_url = window.location.origin+"/djangoapp/login";
+  const login = async (e) => {  // ログイン処理を行う非同期関数
+    e.preventDefault();  // フォームのデフォルトの送信動作を防止
 
-  const login = async (e) => {
-    e.preventDefault();
-
-    const res = await fetch(login_url, {
-        method: "POST",
+    const res = await fetch(login_url, {  // APIへリクエストを送信
+        method: "POST",  // HTTPメソッドをPOSTに設定
         headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json",  // リクエストのコンテンツタイプをJSONに設定
         },
-        body: JSON.stringify({
+        body: JSON.stringify({  // ユーザー情報をJSON形式で送信
             "userName": userName,
             "password": password
         }),
     });
     
-    const json = await res.json();
-    if (json.status != null && json.status === "Authenticated") {
-        sessionStorage.setItem('username', json.userName);
-        setOpen(false);        
+    const json = await res.json();  // レスポンスをJSON形式で取得
+    if (json.status != null && json.status === "Authenticated") {  // 認証成功の場合
+        sessionStorage.setItem('username', json.userName);  // セッションストレージにユーザー名を保存
+        setOpen(false);  // モーダルを閉じる
     }
     else {
-      alert("The user could not be authenticated.")
+      alert("The user could not be authenticated.")  // 認証失敗時にアラートを表示
     }
-};
+  };
 
-  if (!open) {
-    window.location.href = "/";
+  if (!open) {  // モーダルが閉じられた場合
+    window.location.href = "/";  // ホームページへリダイレクト
   };
   
-
   return (
     <div>
-      <Header/>
-    <div onClick={onClose}>
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className='modalContainer'
-      >
-          <form className="login_panel" style={{}} onSubmit={login}>
+      <Header/>  {/* ヘッダーコンポーネントを表示 */}
+      <div onClick={onClose}>  {/* モーダル背景をクリックした際に閉じる */}
+        {/* クリックイベントの伝播を防ぐ（モーダル内クリックで閉じないように） */}
+        <div onClick={(e) => {e.stopPropagation()}} className='modalContainer'>
+          {/* ログインフォーム */}
+          <form className="login_panel" onSubmit={login}>  
               <div>
-              <span className="input_field">Username </span>
-              <input type="text"  name="username" placeholder="Username" className="input_field" onChange={(e) => setUserName(e.target.value)}/>
+                {/* Username */}
+                <span className="input_field">Username </span>
+                <input type="text" name="username" placeholder="Username" className="input_field" onChange={(e) => setUserName(e.target.value)}/>
               </div>
               <div>
-              <span className="input_field">Password </span>
-              <input name="psw" type="password"  placeholder="Password" className="input_field" onChange={(e) => setPassword(e.target.value)}/>            
+                {/* Password */}
+                <span className="input_field">Password </span>
+                <input name="psw" type="password" placeholder="Password" className="input_field" onChange={(e) => setPassword(e.target.value)}/>            
               </div>
               <div>
-              <input className="action_button" type="submit" value="Login"/>
-              <input className="action_button" type="button" value="Cancel" onClick={()=>setOpen(false)}/>
+                {/* ログインボタン */}
+                <input className="action_button" type="submit" value="Login"/>  
+                {/* キャンセルボタン（モーダルを閉じる） */}
+                <input className="action_button" type="button" value="Cancel" onClick={()=>setOpen(false)}/>
               </div>
-              <a className="loginlink" href="/register">Register Now</a>
+              <a className="loginlink" href="/register">Register Now</a>  {/* 新規登録ページへのリンク */}
           </form>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
 
-export default Login;
+export default Login;  // Loginコンポーネントをエクスポート
