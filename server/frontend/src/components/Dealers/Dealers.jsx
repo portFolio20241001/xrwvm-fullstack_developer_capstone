@@ -30,7 +30,9 @@ const Dealers = () => {
     console.log("retobj:",retobj)
 
     if(retobj.status === 200) {  // レスポンスのステータスが200（成功）なら
-      let state_dealers = Array.from(retobj.dealers);  // ディーラーリストを配列に変換
+      //let state_dealers = Array.from(retobj.dealers);  // ディーラーリストを配列に変換
+      let state_dealers = retobj.dealers;  // すでに配列なのでそのまま使用
+      
       setDealersList(state_dealers);  // フィルタリングされたディーラーリストを状態にセット
 
       console.log("ポイント2")
@@ -57,7 +59,8 @@ const Dealers = () => {
         
         // レスポンスのステータスが200（成功）なら
         if(retobj.status === 200) {  
-            let all_dealers = Array.from(retobj.dealers);  // ディーラーリストを配列に変換
+            //let all_dealers = Array.from(retobj.dealers);  // ディーラーリストを配列に変換
+            let all_dealers = retobj.dealers;  // すでに配列なのでそのまま使用
             let states = [];                               // 州リストを初期化
 
             all_dealers.forEach((dealer) => {  // 各ディーラーについて
