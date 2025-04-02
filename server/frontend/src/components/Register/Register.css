@@ -1,66 +1,76 @@
+/* 登録コンテナのスタイル */
 .register_container{
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  margin-top: 2%;
-  margin-bottom: 2%;
-  background-color: darkturquoise;
-  min-width: 350px;
-  width: 30%;
-}
-
-.inputs{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.input{
-  display: flex;
-  flex-direction:row;
-  align-items: center;
-}
-
-.input_field{
-  height:40px;
-  width:200px;
-  margin:.5cm;
-  font-size: medium;
-}
-
-.submit_panel{
-  display: flex;
-  flex-direction:column;
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-
-.submit{
-  margin-left: 30%;
-  margin-right: 30%;
-  cursor: pointer;
-  font-size: large;
-  color: rgb(97, 64, 128);
-  border-radius: 10px;
-  height:50px;
-}
-
-.submit:hover {
-  background-color: wheat;
-}
-
-.header{
-  font: 4em sans-serif;
-  color: white;
-  margin: .5cm;
-}
-
-.img_icon{
-  width:40px;
-  margin:.1cm;
-  background-color:#0C9;
-  color:#FFF;
-  border-radius:50px;
-  text-align:center;
-  box-shadow: 2px 2px 3px #999;  
-}
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: column; /* 子要素を縦方向に並べる */
+    margin: auto; /* 自動で中央に配置 */
+    margin-top: 2%; /* 上部に2%の余白 */
+    margin-bottom: 2%; /* 下部に2%の余白 */
+    background-color: darkturquoise; /* 背景色をダークターコイズに設定 */
+    min-width: 350px; /* 最小幅を350pxに設定 */
+    width: 30%; /* 幅を30%に設定 */
+  }
+  
+  /* 入力フィールドコンテナのスタイル */
+  .inputs{
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: column; /* 子要素を縦方向に並べる */
+    align-items: center; /* 子要素を中央揃え */
+  }
+  
+  /* 個別の入力フィールドのスタイル */
+  .input{
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: row; /* 子要素を横方向に並べる */
+    align-items: center; /* 子要素を縦方向に中央揃え */
+  }
+  
+  /* 入力フィールドのスタイル */
+  .input_field{
+    height: 40px; /* 高さを40pxに設定 */
+    width: 200px; /* 幅を200pxに設定 */
+    margin: .5cm; /* 入力フィールド周りに0.5cmの余白 */
+    font-size: medium; /* フォントサイズを中くらいに設定 */
+  }
+  
+  /* 登録ボタンパネルのスタイル */
+  .submit_panel{
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: column; /* 子要素を縦方向に並べる */
+    margin-top: 5%; /* 上部に5%の余白 */
+    margin-bottom: 5%; /* 下部に5%の余白 */
+  }
+  
+  /* 登録ボタンのスタイル */
+  .submit{
+    margin-left: 30%; /* 左に30%の余白 */
+    margin-right: 30%; /* 右に30%の余白 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+    font-size: large; /* フォントサイズを大きく設定 */
+    color: rgb(97, 64, 128); /* テキスト色を指定 */
+    border-radius: 10px; /* 角を10pxの半径で丸くする */
+    height: 50px; /* 高さを50pxに設定 */
+  }
+  
+  /* 登録ボタンのホバー時のスタイル */
+  .submit:hover {
+    background-color: wheat; /* ホバー時の背景色を小麦色に設定 */
+  }
+  
+  /* ヘッダーのスタイル */
+  .header{
+    font: 4em sans-serif; /* フォントサイズを4em、サンセリフ体を使用 */
+    color: white; /* テキスト色を白に設定 */
+    margin: .5cm; /* ヘッダー周りに0.5cmの余白 */
+  }
+  
+  /* アイコン画像のスタイル */
+  .img_icon{
+    width: 40px; /* アイコンの幅を40pxに設定 */
+    margin: .1cm; /* アイコン周りに0.1cmの余白 */
+    background-color: #0C9; /* アイコンの背景色を緑に設定 */
+    color: #FFF; /* アイコン内の文字色を白に設定 */
+    border-radius: 50px; /* アイコンを丸型にする */
+    text-align: center; /* アイコン内のテキストを中央揃え */
+    box-shadow: 2px 2px 3px #999; /* アイコンに2pxのシャドウをつける */
+  }
+  

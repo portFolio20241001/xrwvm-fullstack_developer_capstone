@@ -44,6 +44,9 @@ const Register = () => {
 
     const json = await res.json(); // レスポンスをJSON形式で取得
 
+    console.log("res:",res)
+    console.log("json:",json)
+
     if (json.status) { // 登録が成功した場合
         sessionStorage.setItem('username', json.userName); // ユーザー名をセッションストレージに保存
         window.location.href = window.location.origin; // ホームページにリダイレクト
@@ -52,9 +55,6 @@ const Register = () => {
       alert("The user with same username is already registered"); // 警告メッセージを表示
       window.location.href = window.location.origin; // ホームページにリダイレクト
     }
-
-    console.log("res:",res)
-    console.log("json:",json)
 
   };
 
