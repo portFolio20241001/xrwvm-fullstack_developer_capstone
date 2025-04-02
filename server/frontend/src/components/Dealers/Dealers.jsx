@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';  // Reactと必要なフック（useState, useEffect）をインポート
-import "./Dealers.css";  // DealersコンポーネントのCSSスタイルをインポート
-import "../assets/style.css";  // 共通のスタイルシートをインポート
-import Header from '../Header/Header';  // ヘッダーコンポーネントをインポート
-import review_icon from "../assets/reviewicon.png"  // レビューアイコン画像をインポート
+import React, { useState, useEffect } from 'react';     // Reactと必要なフック（useState, useEffect）をインポート
+import "./Dealers.css";                                 // DealersコンポーネントのCSSスタイルをインポート
+import "../assets/style.css";                           // 共通のスタイルシートをインポート
+import Header from '../Header/Header';                  // ヘッダーコンポーネントをインポート
+import review_icon from "../assets/reviewicon.png"      // レビューアイコン画像をインポート
 
-const Dealers = () => {  // Dealersコンポーネントの定義
+// Dealersコンポーネントの定義
+const Dealers = () => {
   const [dealersList, setDealersList] = useState([]);  // ディーラーリストを格納する状態変数
   // let [state, setState] = useState("")  // 状態（未使用）
   let [states, setStates] = useState([]);  // 州リストを格納する状態変数
 
   // let root_url = window.location.origin  // サーバーのルートURL（未使用）
-  let dealer_url ="/djangoapp/get_dealers";  // ディーラー情報を取得するためのAPIのURL
-  
-  let dealer_url_by_state = "/djangoapp/get_dealers/";  // 特定の州のディーラー情報を取得するAPIのURL
+
+  let dealer_url ="/djangoapp/get_dealers";              // ディーラー情報を取得するためのAPIのURL
+  let dealer_url_by_state = "/djangoapp/get_dealers/";   // 特定の州のディーラー情報を取得するAPIのURL
  
   // 特定の州のディーラー情報を取得してフィルタリングする非同期関数
   const filterDealers = async (state) => {
-
-    console.log("aaa")
 
     dealer_url_by_state = dealer_url_by_state + state;  // APIのURLに州名を追加
 
@@ -38,31 +37,43 @@ const Dealers = () => {  // Dealersコンポーネントの定義
     }
   }
 
-  // すべてのディーラー情報を取得する非同期関数
-  const get_dealers = async () => {
-
-    console.log("ポイント1")
-
-    const res = await fetch(dealer_url, {  // APIにGETリクエストを送信
-      method: "GET"
-    });
-    const retobj = await res.json();  // レスポンスをJSON形式で取得
-    if(retobj.status === 200) {  // レスポンスのステータスが200（成功）なら
-      let all_dealers = Array.from(retobj.dealers);  // ディーラーリストを配列に変換
-      let states = [];  // 州リストを初期化
-      all_dealers.forEach((dealer) => {  // 各ディーラーについて
-        states.push(dealer.state);  // 各ディーラーの州をstates配列に追加
-      });
-
-      setStates(Array.from(new Set(states)));  // 重複を除いた州リストを状態にセット
-      setDealersList(all_dealers);  // すべてのディーラーリストを状態にセット
-    }
-  }
-
   // コンポーネントがマウントされたときにディーラー情報を取得する
   useEffect(() => {
+
+    // すべてのディーラー情報を取得する非同期関数
+    const get_dealers = async () => {
+
+        console.log("ポイント1")
+
+        const res = await fetch(dealer_url, {  // APIにGETリクエストを送信
+            method: "GET"
+        });
+
+        console.log("res:",res)
+
+        const retobj = await res.json();  // レスポンスをJSON形式で取得
+
+        console.log("retobj:",retobj)
+        
+        // レスポンスのステータスが200（成功）なら
+        if(retobj.status === 200) {  
+            let all_dealers = Array.from(retobj.dealers);  // ディーラーリストを配列に変換
+            let states = [];                               // 州リストを初期化
+
+            all_dealers.forEach((dealer) => {  // 各ディーラーについて
+                states.push(dealer.state);  // 各ディーラーの州をstates配列に追加
+            });
+
+            console.log("all_dealers:",all_dealers)
+            console.log("states:",states)
+
+            setStates(Array.from(new Set(states)));  // 重複を除いた州リストを状態にセット
+            setDealersList(all_dealers);  // すべてのディーラーリストを状態にセット
+        }
+    };
+
     get_dealers();  // ディーラー情報を取得する関数を実行
-  },[]);  // 初回レンダリング後にのみ実行
+  },[dealer_url]);  // 初回レンダリング後にのみ実行
 
   // ログインしているかどうかをチェック
   let isLoggedIn = sessionStorage.getItem("username") != null ? true : false;
