@@ -1,9 +1,10 @@
-import React, { useState } from "react"; // ReactとuseStateフックをインポート
-import "./Register.css"; // スタイルシートをインポート
-import user_icon from "../assets/person.png" // ユーザーアイコンの画像をインポート
-import email_icon from "../assets/email.png" // メールアイコンの画像をインポート
-import password_icon from "../assets/password.png" // パスワードアイコンの画像をインポート
-import close_icon from "../assets/close.png" // 閉じるアイコンの画像をインポート
+import React, { useState } from "react";            // ReactとuseStateフックをインポート
+import "./Register.css";                            // スタイルシートをインポート
+import user_icon from "../assets/person.png"        // ユーザーアイコンの画像をインポート
+import email_icon from "../assets/email.png"        // メールアイコンの画像をインポート
+import password_icon from "../assets/password.png"  // パスワードアイコンの画像をインポート
+import close_icon from "../assets/close.png"        // 閉じるアイコンの画像をインポート
+import Header from '../Header/Header';              // ヘッダーコンポーネントをインポート
 
 const Register = () => {
   // ユーザー名、パスワード、メールアドレス、名前を管理するためのステートを定義
@@ -42,6 +43,7 @@ const Register = () => {
     });
 
     const json = await res.json(); // レスポンスをJSON形式で取得
+
     if (json.status) { // 登録が成功した場合
         sessionStorage.setItem('username', json.userName); // ユーザー名をセッションストレージに保存
         window.location.href = window.location.origin; // ホームページにリダイレクト
@@ -50,54 +52,76 @@ const Register = () => {
       alert("The user with same username is already registered"); // 警告メッセージを表示
       window.location.href = window.location.origin; // ホームページにリダイレクト
     }
+
+    console.log("res:",res)
+    console.log("json:",json)
+
   };
 
   // JSXでレンダリングするUIを定義
   return(
-    <div className="register_container" style={{width: "50%"}}> {/* 登録コンテナ */}
-      <div className="header" style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}> {/* ヘッダー */}
-          <span className="text" style={{flexGrow:"1"}}>SignUp</span> {/* サインアップテキスト */}
-          <div style={{display: "flex", flexDirection: "row", justifySelf: "end", alignSelf: "start" }}> {/* 閉じるアイコンの表示 */}
-          <a href="/" onClick={()=>{gohome()}} style={{justifyContent: "space-between", alignItems:"flex-end"}}>
-            <img style={{width:"1cm"}} src={close_icon} alt="X"/> {/* 閉じるアイコン */}
-          </a>
-          </div>
-          <hr/> {/* ヘッダー下の区切り線 */}
+    <div>
+
+        <Header/>  {/* ヘッダーコンポーネントを表示 */}
+
+        {/* 登録コンテナ */}
+        <div className="register_container" style={{width: "50%"}}>
+
+            {/* ヘッダー */}
+            <div className="header" style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+            {/* サインアップテキスト */}
+            <span className="text" style={{flexGrow:"1"}}>SignUp</span>
+            {/* 閉じるアイコン（✖）の表示 */}
+            <div style={{display: "flex", flexDirection: "row", justifySelf: "end", alignSelf: "start" }}>
+                <a href="/" onClick={()=>{gohome()}} style={{justifyContent: "space-between", alignItems:"flex-end"}}>
+                <img style={{width:"1cm"}} src={close_icon} alt="X"/>
+                </a>
+            </div>
+            <hr/> {/* ヘッダー下の区切り線 */}
+            </div>
+
+            {/* フォーム */}
+            <form onSubmit={register}>
+                <div className="inputs"> {/* 入力フィールドコンテナ */}
+                {/* ユーザー名入力 */}
+                <div className="input">
+                    <img src={user_icon} className="img_icon" alt='Username'/> {/* ユーザーアイコン */}
+                    <input type="text"  name="username" placeholder="Username" className="input_field"
+                    onChange={(e) => setUserName(e.target.value)}/> {/* ユーザー名入力フィールド */}
+                </div>
+                {/* 名入力 */}
+                <div>
+                    <img src={user_icon} className="img_icon" alt='First Name'/>
+                    <input type="text"  name="first_name" placeholder="First Name" className="input_field"
+                    onChange={(e) => setFirstName(e.target.value)}/>
+                </div>
+                {/* 姓入力 */}
+                <div>
+                    <img src={user_icon} className="img_icon" alt='Last Name'/>
+                    <input type="text"  name="last_name" placeholder="Last Name" className="input_field"
+                    onChange={(e) => setlastName(e.target.value)}/>
+                </div>
+                {/* メールアドレス入力 */}
+                <div>
+                    <img src={email_icon} className="img_icon" alt='Email'/>
+                    <input type="email"  name="email" placeholder="email" className="input_field"
+                    onChange={(e) => setEmail(e.target.value)}/>
+                </div>
+                {/* パスワード入力 */}
+                <div className="input">
+                    <img src={password_icon} className="img_icon" alt='password'/>
+                    <input name="psw" type="password"  placeholder="Password" className="input_field"
+                    onChange={(e) => setPassword(e.target.value)}/>
+                </div>
+
+                </div>
+                {/* 登録送信ボタンパネル */}
+                <div className="submit_panel">
+                <input className="submit" type="submit" value="Register"/>
+                </div>
+            </form>
         </div>
-
-        {/* フォーム */}
-        <form onSubmit={register}>
-        <div className="inputs"> {/* 入力フィールドコンテナ */}
-          <div className="input"> {/* ユーザー名入力 */}
-            <img src={user_icon} className="img_icon" alt='Username'/> {/* ユーザーアイコン */}
-            <input type="text"  name="username" placeholder="Username" className="input_field" onChange={(e) => setUserName(e.target.value)}/> {/* ユーザー名入力フィールド */}
-          </div>
-          <div> {/* 名入力 */}
-            <img src={user_icon} className="img_icon" alt='First Name'/>
-            <input type="text"  name="first_name" placeholder="First Name" className="input_field" onChange={(e) => setFirstName(e.target.value)}/>
-          </div>
-
-          <div> {/* 姓入力 */}
-            <img src={user_icon} className="img_icon" alt='Last Name'/>
-            <input type="text"  name="last_name" placeholder="Last Name" className="input_field" onChange={(e) => setlastName(e.target.value)}/>
-          </div>
-
-          <div> {/* メールアドレス入力 */}
-            <img src={email_icon} className="img_icon" alt='Email'/>
-            <input type="email"  name="email" placeholder="email" className="input_field" onChange={(e) => setEmail(e.target.value)}/>
-          </div>
-
-          <div className="input"> {/* パスワード入力 */}
-            <img src={password_icon} className="img_icon" alt='password'/>
-            <input name="psw" type="password"  placeholder="Password" className="input_field" onChange={(e) => setPassword(e.target.value)}/>
-          </div>
-
-        </div>
-        <div className="submit_panel"> {/* 送信ボタンパネル */}
-          <input className="submit" type="submit" value="Register"/> {/* 登録ボタン */}
-        </div>
-      </form>
-      </div>
+    </div>
   )
 }
 
