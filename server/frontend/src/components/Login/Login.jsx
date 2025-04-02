@@ -23,8 +23,13 @@ const Login = ({ onClose }) => {  // Loginコンポーネントを定義し、on
             "password": password
         }),
     });
+
+    console.log("res:",res)
     
     const json = await res.json();  // レスポンスをJSON形式で取得
+
+    console.log("json:",json)
+
     if (json.status != null && json.status === "Authenticated") {  // 認証成功の場合
         sessionStorage.setItem('username', json.userName);  // セッションストレージにユーザー名を保存
         setOpen(false);  // モーダルを閉じる

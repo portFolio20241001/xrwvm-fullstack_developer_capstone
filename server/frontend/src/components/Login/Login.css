@@ -1,86 +1,93 @@
-.navcontainer{
-  display: flex;
-  flex: 1;
-
-  flex-direction: row;
-  margin: auto;
-  margin-top: 2%;
-  background-color: rgb(97, 64, 128);
-  align-items: flex-start;
+/* ナビゲーションコンテナのスタイル設定 */
+.navcontainer {
+  display: flex; /* フレックスボックスを使用 */
+  flex: 1; /* 親要素の残りのスペースを全て埋める */
+  flex-direction: row; /* 子要素を横方向に並べる */
+  margin: auto; /* 自動マージンで中央寄せ */
+  margin-top: 2%; /* 上マージンを2%に設定 */
+  background-color: rgb(97, 64, 128); /* 背景色を設定 */
+  align-items: flex-start; /* 子要素を上端に揃える */
 }
 
-.navitems{
-  display: flex;
-  flex-direction: row;
-  padding: 20px;
-  flex: 1;
-  justify-content: flex-start;
-  justify-self: center;
+/* ナビゲーションアイテムのスタイル設定 */
+.navitems {
+  display: flex; /* フレックスボックスを使用 */
+  flex-direction: row; /* 子要素を横方向に並べる */
+  padding: 20px; /* 内側の余白を設定 */
+  flex: 1; /* 親要素の残りのスペースを埋める */
+  justify-content: flex-start; /* 子要素を左寄せに配置 */
+  justify-self: center; /* 自身の配置を中央寄せにする（不要なプロパティ） */
 }
 
-.nav_item{
-  margin-left:15px;
-  font-size: 20px;
-  color: azure;
-  align-self: center;
+/* 各ナビゲーション項目のスタイル設定 */
+.nav_item {
+  margin-left: 15px; /* 左側のマージンを設定 */
+  font-size: 20px; /* フォントサイズを設定 */
+  color: azure; /* 文字色を設定 */
+  align-self: center; /* 自身を中央に揃える */
 }
 
+/* 入力パネルのスタイル設定 */
 .input_panel {
-  display: flex;
-  flex-direction: row;
-  padding: 20px;
-  flex: 1;
-  justify-content: flex-end;
-  justify-self: center;
+  display: flex; /* フレックスボックスを使用 */
+  flex-direction: row; /* 子要素を横方向に並べる */
+  padding: 20px; /* 内側の余白を設定 */
+  flex: 1; /* 親要素の残りのスペースを埋める */
+  justify-content: flex-end; /* 子要素を右寄せに配置 */
+  justify-self: center; /* 自身の配置を中央寄せにする（不要なプロパティ） */
 }
 
-.input_field{
-  height:40px;
-  width:200px; 
-  font-size: medium;
-  margin:.5cm;
+/* 入力フィールドのスタイル設定 */
+.input_field {
+  height: 40px; /* 高さを設定 */
+  width: 200px; /* 幅を設定 */
+  font-size: medium; /* フォントサイズを中程度に設定 */
+  margin: 0.5cm; /* 外側の余白を設定 */
 }
 
-
-.action_button{
-  cursor: pointer;
-  font-size: large;
-  color: rgb(97, 64, 128);
-  border-radius: 10px;
-  height:40px;
-  padding-left:.5cm;
-  padding-right: .5cm;
-  margin: .5cm;
+/* アクションボタンのスタイル設定 */
+.action_button {
+  cursor: pointer; /* カーソルをポインターに設定（クリック可能） */
+  font-size: large; /* フォントサイズを大きく設定 */
+  color: rgb(97, 64, 128); /* 文字色を設定 */
+  border-radius: 10px; /* 角を丸くする */
+  height: 40px; /* 高さを設定 */
+  padding-left: 0.5cm; /* 左側のパディングを設定 */
+  padding-right: 0.5cm; /* 右側のパディングを設定 */
+  margin: 0.5cm; /* 外側の余白を設定 */
 }
 
+/* 送信ボタンのホバー時のスタイル設定 */
 .submit:hover {
-  background-color: wheat;
+  background-color: wheat; /* 背景色をホバー時に変更 */
 }
 
-.small_header{
-  font: 30px sans-serif;
-  color:azure;
-  margin: .5cm;
+/* 小さいヘッダーのスタイル設定 */
+.small_header {
+  font: 30px sans-serif; /* フォントサイズとフォントファミリーを設定 */
+  color: azure; /* 文字色を設定 */
+  margin: 0.5cm; /* 外側の余白を設定 */
 }
 
-.username{
-  font: 30px sans-serif;
-  color:azure;
-  margin: .5cm;
-  justify-content: 'flex-end';
-  align-self:flex-end;
+/* ユーザー名表示部分のスタイル設定 */
+.username {
+  font: 30px sans-serif; /* フォントサイズとフォントファミリーを設定 */
+  color: azure; /* 文字色を設定 */
+  margin: 0.5cm; /* 外側の余白を設定 */
+  justify-content: flex-end; /* コンテンツを右寄せ（不要なプロパティ） */
+  align-self: flex-end; /* 自身を下端に揃える */
 }
 
+/* ログインパネルのスタイル設定 */
 .login_panel {
-  display: flex;
-  flex-direction: column;
-  margin:auto;
-  margin: 0 auto;
-  width: 50%; 
-  padding: 20px;
-  flex: 1;
-  justify-content:center;
-  align-items: center;
-  vertical-align: middle;
-  
+  display: flex; /* フレックスボックスを使用 */
+  flex-direction: column; /* 子要素を縦方向に並べる */
+  margin: auto; /* 自動マージンで中央寄せ */
+  margin: 0 auto; /* 上書き：中央寄せ */
+  width: 50%; /* 幅を50%に設定 */
+  padding: 20px; /* 内側の余白を設定 */
+  flex: 1; /* 親要素の残りのスペースを埋める */
+  justify-content: center; /* 子要素を中央寄せに配置 */
+  align-items: center; /* 子要素を中央に揃える */
+  vertical-align: middle; /* 垂直方向の中央揃え（無効なプロパティ） */
 }
