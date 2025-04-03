@@ -43,15 +43,15 @@ const Dealer = () => {
     const res = await fetch(dealer_url, { method: "GET" }); // djangoapp/dealer/${id}にGETリクエストを送信
     const retobj = await res.json();
 
+    console.log("【get_dealer】res:",res)
+    console.log("【get_dealer】retobj:",retobj)
+
     // ステータスコードが200（成功）の場合
     if (retobj.status === 200) {
 
-      console.log("確認ポイント2")
-      console.log("retobj:",retobj)
-
       let dealerobj = retobj.dealer;
 
-      console.log("dealerobj:",dealerobj)
+      console.log("【get_dealer】dealerobj:",dealerobj)
 
       setDealer(dealerobj); // 最初のディーラー情報をセット
     }
@@ -60,6 +60,8 @@ const Dealer = () => {
   // レビュー情報を取得する非同期関数
   const get_reviews = useCallback(async () => {
     try {
+      console.log("確認ポイント2")
+
       const res = await fetch(reviews_url, { method: "GET" });
   
       if (!res.ok) {
@@ -68,28 +70,24 @@ const Dealer = () => {
   
       const retobj = await res.json();
 
-      console.log("retobj.reviews:", retobj.reviews);  // ここで reviews の型と内容を確認
-      console.log("typeof retobj.reviews:", typeof retobj.reviews);
-      console.log("Array.isArray(retobj.reviews):", Array.isArray(retobj.reviews));
-
-      console.log("retobj:", retobj);
+      console.log("【get_reviews】res:",res)
+      console.log("【get_reviews】retobj:",retobj)
       
-      // reviews が配列でない場合でも扱えるように修正
-      const reviewsData = Array.isArray(retobj.reviews) ? retobj.reviews : [];
+      // reviews を格納
+      const reviewsData = retobj.reviews;
   
+      console.log("reviewsData:", reviewsData);
+
       if (reviewsData.length > 0) {
         setReviews(reviewsData); // レビューがあれば状態を更新
-        console.log("reviews:", reviews);
-        console.log("reviews type:", typeof reviews);
-        console.log("Array.isArray(reviews):", Array.isArray(reviews));
 
       } else {
-        setUnreviewed(true); // レビューがない場合の処理
+        setUnreviewed(true); // レビューがない場合の処理　レビューがない状態を管理する変数をTrueにする
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
     }
-  }, [reviews_url, setReviews, reviews]);    //reviews_url, setReviews, reviewsの参照値が変わると再実行
+  }, [reviews_url, setReviews]);    //reviews_url, setReviewsの参照値が変わると再実行
   
 
   // 感情分析アイコンを取得する関数
