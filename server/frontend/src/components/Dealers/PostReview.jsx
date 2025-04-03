@@ -93,8 +93,15 @@ const PostReview = () => {
       console.log("【get_dealer】retobj:", retobj);
       console.log("【get_dealer】dealerobjs:", dealerobjs);
 
-      if (dealerobjs.length > 0)
-        setDealer(dealerobjs[0]);
+      console.log("【get_dealer】dealerobjs.length:", dealerobjs.length);
+
+      // dealerobjs が null または undefined でないことを確認
+      if (dealerobjs && Object.keys(dealerobjs).length > 0) {
+            // dealerobjs にデータが含まれている場合、setDealer を実行して状態を更新
+            setDealer(dealerobjs);
+      }
+
+    
     }
   }, [dealer_url, setDealer]);  //dealer_url, setDealerの参照値が変わると再実行
 
