@@ -155,7 +155,7 @@ def get_cars(request):
             }
         )
 
-    return JsonResponse({"CarModels": cars})  # 車種とメーカー名のリストをJSON形式で返す
+    return JsonResponse({"status": 200, "CarModels": cars})  # 車種とメーカー名のリストをJSON形式で返す
 
 
 # ディーラー一覧ページの表示を行う `get_dealerships` 関数
