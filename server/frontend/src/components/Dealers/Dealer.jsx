@@ -1,5 +1,5 @@
 // Reactと必要なフックをインポート
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 // スタイルシートのインポート
@@ -17,23 +17,15 @@ import Header from '../Header/Header';
 
 // Dealerコンポーネントの定義
 const Dealer = () => {
-  // ディーラー情報の状態管理
-  const [dealer, setDealer] = useState({});
-  // レビュー情報の状態管理
-  const [reviews, setReviews] = useState([]);
-  // レビューがない場合のフラグ
-  const [unreviewed, setUnreviewed] = useState(false);
-  // レビュー投稿ボタンの状態管理
-  const [postReview, setPostReview] = useState(<></>);
-
-  // 現在のURLを取得
-  let curr_url = window.location.href;
-  // ルートURLを抽出
-  let root_url = curr_url.substring(0, curr_url.indexOf("dealer"));
-  // URLパラメータを取得
-  let params = useParams();
-  // ディーラーのIDを取得
-  let id = params.id;
+  const [dealer, setDealer] = useState({});             // ディーラー情報の状態管理
+  const [reviews, setReviews] = useState([]);           // レビュー情報の状態管理
+  const [unreviewed, setUnreviewed] = useState(false);  // レビューがない場合のフラグ
+  const [postReview, setPostReview] = useState(<></>);  // レビュー投稿ボタンの状態管理
+  
+  let curr_url = window.location.href;                              // 現在のURLを取得
+  let root_url = curr_url.substring(0, curr_url.indexOf("dealer")); // ルートURLを抽出
+  let params = useParams();                                         // URLパラメータを取得
+  let id = params.id;                                               // ディーラーのIDを取得
 
   // APIエンドポイントの作成
   let dealer_url = root_url + `djangoapp/dealer/${id}`;
@@ -41,13 +33,14 @@ const Dealer = () => {
   let post_review = root_url + `postreview/${id}`;
 
   // ディーラー情報を取得する非同期関数
-  const get_dealer = async () => {
+  const get_dealer = useCallback(async () => {
+    
 
     console.log("確認ポイント1")
 
     console.log("【Dealer.jsx】dealer_url:",dealer_url)
 
-    const res = await fetch(dealer_url, { method: "GET" });
+    const res = await fetch(dealer_url, { method: "GET" }); // djangoapp/dealer/${id}にGETリクエストを送信
     const retobj = await res.json();
 
     // ステータスコードが200（成功）の場合
@@ -62,10 +55,10 @@ const Dealer = () => {
 
       setDealer(dealerobj); // 最初のディーラー情報をセット
     }
-  };
+  }, [dealer_url, setDealer]);  //dealer_url, setDealerの参照値が変わると再実行
 
   // レビュー情報を取得する非同期関数
-  const get_reviews = async () => {
+  const get_reviews = useCallback(async () => {
     try {
       const res = await fetch(reviews_url, { method: "GET" });
   
@@ -86,13 +79,17 @@ const Dealer = () => {
   
       if (reviewsData.length > 0) {
         setReviews(reviewsData); // レビューがあれば状態を更新
+        console.log("reviews:", reviews);
+        console.log("reviews type:", typeof reviews);
+        console.log("Array.isArray(reviews):", Array.isArray(reviews));
+
       } else {
         setUnreviewed(true); // レビューがない場合の処理
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
     }
-  };
+  }, [reviews_url, setReviews, reviews]);    //reviews_url, setReviews, reviewsの参照値が変わると再実行
   
 
   // 感情分析アイコンを取得する関数
@@ -124,11 +121,7 @@ const Dealer = () => {
       );
     }
 
-    console.log("reviews:", reviews);
-    console.log("reviews type:", typeof reviews);
-    console.log("Array.isArray(reviews):", Array.isArray(reviews));
-
-  }, []); // 依存関係に関数を指定
+  }, [get_dealer, get_reviews, post_review]); // get_dealer, get_reviews, post_reviewの参照値が変わると再実行
 
   // JSXのレンダリング
   return (
