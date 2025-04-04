@@ -34,7 +34,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     'kenkouishi11-8000.' +
-    'theiadockernext-1-labs-prod-theiak8s-4-tor01.' +
+    'theiadockernext-0-labs-prod-theiak8s-4-tor01.' +
     'proxy.cognitiveclass.ai'
 ]
 
@@ -42,7 +42,7 @@ ALLOWED_HOSTS = [
 # 本当はkenkou~のところは分割しない。Lint通すために分割してるだけ。
 CSRF_TRUSTED_ORIGINS = [
     'https://kenkouishi11-8000.' +
-    'theiadockernext-1-labs-prod-theiak8s-4-tor01.' +
+    'theiadockernext-0-labs-prod-theiak8s-4-tor01.' +
     'proxy.cognitiveclass.ai'
 ]
 
