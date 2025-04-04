@@ -90,7 +90,7 @@ app.get('/fetchDealers/:state', async (req, res) => {
 app.get('/fetchDealer/:id', async (req, res) => {
   try {
     // 指定されたIDでディーラー情報を取得
-    const dealership = await Dealerships.findOne({ id: req.params.id });
+    const dealership = await Dealerships.findOne({ id: req.params.id }); //findOneにすると辞書データが返される。findはArray
     if (dealership) {
       res.json(dealership);  // 取得したディーラー情報をJSON形式で返す
     } else {
