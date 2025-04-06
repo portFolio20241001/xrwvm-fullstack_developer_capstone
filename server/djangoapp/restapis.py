@@ -78,7 +78,7 @@ def post_review(data_dict):
 
     try:
         response = requests.post(request_url, json=data_dict)
-        print(response.json())
+        print("post_review_response.json():",response.json())
         return response.json()
     except Exception as e:
         print(f"Network exception occurred: {e}")
